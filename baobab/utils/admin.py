@@ -6,6 +6,7 @@ sub class the django Admin class:
  * remove the delete action if you don't have the delete right
 """
 
+from django.db.utils import OperationalError
 from django.contrib.admin import (ModelAdmin as DjangoModelAdmin,
                                   StackedInline as DjangoStackedInline,
                                   TabularInline as DjangoTabularInline)
@@ -24,27 +25,31 @@ class ModelAdmin(DjangoModelAdmin):
     """
 
     def __init__(self, *args, **kargs):
-        cls = self.__class__
-        if hasattr(cls, 'list_display_dynamic'):
-            val_name = cls.list_display_dynamic['val_name']
-            filter_ = cls.list_display_dynamic['filter']
-            if cls.list_display_dynamic['sub_obj']:
-                sub_objs = cls.list_display_dynamic['sub_obj'].split('.')
-            else:
-                sub_objs = []
-            for val, name in val_name:
+        try:
+            cls = self.__class__
+            if hasattr(cls, 'list_display_dynamic'):
+                val_name = cls.list_display_dynamic['val_name']
+                filter_ = cls.list_display_dynamic['filter']
+                if cls.list_display_dynamic['sub_obj']:
+                    sub_objs = cls.list_display_dynamic['sub_obj'].split('.')
+                else:
+                    sub_objs = []
+                for val, name in val_name:
 
-                def _columns(self, obj, val=val):
-                    for sub_obj in sub_objs:
-                        obj = getattr(obj, sub_obj)
-                    if obj.filter(**{filter_: val}).exists():
-                        return '<b>True</b>'
-                    return 'False'
-                _columns.short_description = name
-                _columns.allow_tags = True
+                    def _columns(self, obj, val=val):
+                        for sub_obj in sub_objs:
+                            obj = getattr(obj, sub_obj)
+                        if obj.filter(**{filter_: val}).exists():
+                            return '<b>True</b>'
+                        return 'False'
+                    _columns.short_description = name
+                    _columns.allow_tags = True
 
-                setattr(cls, name, _columns)
-                cls.list_display.append(name)
+                    setattr(cls, name, _columns)
+                    cls.list_display.append(name)
+        except OperationalError as err:
+            if not err.message.startswith('no such table'):
+                raise
         super(ModelAdmin, self).__init__(*args, **kargs)
 
     def get_form(self, request, *args, **kwargs):
