@@ -1,5 +1,4 @@
 Django python-django; PEP386
-South python-django-south; PEP386
 django-tastypie python-tastypie; PEP386
 pytz python-tz; PEP386
 oauth2 python-oauth2; PEP386
