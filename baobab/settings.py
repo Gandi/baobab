@@ -99,6 +99,7 @@ if 'test' in sys.argv:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:'
         }
     }
 
@@ -197,7 +198,7 @@ ROOT_URLCONF = 'baobab.urls'
 WSGI_APPLICATION = 'baobab.wsgi.application'
 
 TEMPLATE_DIRS = (
-    ''
+    '',
 )
 
 INSTALLED_APPS = (
@@ -207,7 +208,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
-    'south',
     # XXX need to be first to be able to path correctly for test
     #     See TestSocialNetwork.test test_10_get_max_char_ko
     'baobab.socialnetwork',
@@ -222,8 +222,9 @@ INSTALLED_APPS = (
 APPEND_SLASH = False
 TASTYPIE_ALLOW_MISSING_SLASH = True
 TASTYPIE_DEFAULT_FORMATS = ['json', 'html']
-SOUTH_TESTS_MIGRATE = False
 API_LIMIT_PER_PAGE = 0
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 if DEBUG or TEST:
     import warnings
