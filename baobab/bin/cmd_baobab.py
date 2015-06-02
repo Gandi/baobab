@@ -92,12 +92,6 @@ def main():
             default_user()
             print 'loading fixtures ...'
             call_command('loaddata', *fixtures, verbosity=0)
-    elif argv[1] == 'test':
-        apps = [name.split('.', 1)[1] for name in settings.INSTALLED_APPS
-                if name.startswith('baobab.')]
-        if not [arg for arg in sys.argv if arg.split('.')[0] in apps]:
-            sys.argv.extend(apps)
-        execute_from_command_line(sys.argv)
     elif len(argv) > 2 and argv[1] == 'migrate' and argv[2] == 'fixtures':
         sys.argv.append('test')
         execute_from_command_line([argv[0], 'migrate_fixtures'])
