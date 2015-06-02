@@ -113,8 +113,8 @@ class TimeZoneAdmin(ModelAdmin):
     list_display = ('timezone', )
     fields = ('timezone', )
 
-    def queryset(self, request):
-        qs = super(TimeZoneAdmin, self).queryset(request)
+    def get_queryset(self, request):
+        qs = super(TimeZoneAdmin, self).get_queryset(request)
         return qs.filter(user=request.user)
 
     def has_add_permission(self, request):
