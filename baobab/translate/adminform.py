@@ -17,6 +17,7 @@ class EventDataForm(ModelForm):
 
     class Meta:
         model = models.EventData
+        fields = '__all__'
 
 
 class EventLogDataForm(ModelForm):
@@ -28,3 +29,4 @@ class EventLogDataForm(ModelForm):
 
     class Meta:
         model = models.EventLogData
+        fields = '__all__'

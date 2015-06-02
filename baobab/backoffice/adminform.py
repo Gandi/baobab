@@ -107,6 +107,7 @@ class EventForm(ModelForm):
                                    'rows': 2,
                                    'maxlength': allowed_char})
         }
+        fields = '__all__'
 
 
 class EventLogForm(ModelForm):
@@ -165,3 +166,4 @@ class EventLogForm(ModelForm):
                                    'rows': 2,
                                    'maxlength': allowed_char})
         }
+        fields = '__all__'
