@@ -13,7 +13,7 @@ class EventDataInline(TabularInline):
     form = EventDataForm
     model = models.EventData
     fields = ['lang', 'title', 'summary']
-    extra = models.Lang.objects.count()
+    extra = models.Lang.count()
     max_num = extra
 
     # XXX for safety
@@ -25,7 +25,7 @@ class EventLogDataInline(TabularInline):
     form = EventLogDataForm
     model = models.EventLogData
     fields = ['lang', 'comment']
-    extra = models.Lang.objects.count()
+    extra = models.Lang.count()
     max_num = extra
 
     # XXX for safety
