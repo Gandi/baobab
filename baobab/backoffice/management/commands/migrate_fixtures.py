@@ -6,7 +6,7 @@ the base fixtures are the one in settings.FIXTURE_DIRS
 the name of the fixtures has to be of the form: db_app_name.json
 this means one file by app
 
-a mandatory file: db_south.json which keeps track of applied migrations
+a mandatory file: db_migrations.json which keeps track of applied migrations
 
 the global var APP define on which app this hack should be applied
 """
@@ -19,8 +19,6 @@ import sys
 from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
-
-from south.models import MigrationHistory
 
 from baobab.utils.handle_south import HandleSouth
 
@@ -65,11 +63,14 @@ class Command(BaseCommand):
             print 'ERROR: not in test env'
             exit(1)
         HandleSouth.disable()
-        call_command('syncdb', interactive=False)
+
+        call_command('migrate', interactive=False)
+
         HandleSouth.enable()
         # migration already done
-        call_command('loaddata', 'db_south', verbosity='0')
+        call_command('loaddata', 'db_migrations', verbosity='0')
         call_command('loaddata', 'db_user', verbosity='0')
+
         for app in HandleSouth.get_apps():
             if not self.has_fixtures(app):
                 continue
@@ -92,4 +93,4 @@ class Command(BaseCommand):
                     call_command('migrate', app, migration)
             self.migrate(app)
         # update the done migration
-        self.migrate('south')
+        self.migrate('migrations')

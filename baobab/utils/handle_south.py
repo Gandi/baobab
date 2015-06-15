@@ -20,7 +20,7 @@ class HandleSouth(object):
             app = filter(lambda x: x.startswith('baobab.'),
                          settings.INSTALLED_APPS)
             app = map(lambda x: x.rsplit('.', 1)[1], app)
-            ignore = ['ignore'] * len(app)
+            ignore = ['baobab.ignore'] * len(app)
             cls.apps = SortedDict(zip(app, ignore))
         return cls.apps
 
