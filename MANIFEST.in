@@ -1,0 +1,3 @@
+include README
+include CHANGELOG
+recursive-include baobab/front/templates *.html

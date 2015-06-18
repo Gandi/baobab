@@ -1,0 +1,322 @@
+header {
+  @border-size: 140px;
+  @title-size: 52px;
+  @subtitle-size: 18px;
+  @padding-top: 20px;
+  @links-size: 12px;
+
+  border-top: @border-size solid #000;
+  border-bottom: 1px solid #e2e2e2;
+  box-sizing: border-box;
+
+  min-height: 100%;
+  width: 100%;
+
+  background-color: #f2f2f2;
+  text-align: center;
+
+  position: relative;
+  h1 {
+    position: absolute;
+    top: -1 * (@border-size - @padding-top);
+
+    height: @title-size;
+    width: 100%;
+    text-align: center;
+
+    color: #fff;
+    font-size: 50px;
+
+    background: url('images/logo_gandi.png') no-repeat;
+    background-position: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-indent: 110%;
+  }
+  > h2 {
+    position: absolute;
+    top: -1 * (@border-size - @padding-top - @title-size);
+
+    height: @subtitle-size;
+    width: 100%;
+    text-align: center;
+
+    color: #fff;
+    font-size: 18px;
+    font-size: 1.8rem;
+
+    font-family: MuseoSlab500Regular;
+    font-weight: 400;
+
+    text-indent: 20px;
+ }
+
+ > ul {
+    position: absolute;
+    top: -30px;
+
+    height: @links-size;
+    width: 100%;
+
+    text-align: center;
+    font-size: 12px;
+
+    a, a:visited, a:hover {
+      color: #aaa;
+    }
+
+    li {
+      display: inline-block;
+      list-style: none;
+
+      &{
+        padding-left: 30px;
+        padding-right: 10px;
+        border-left: 1px solid #fff;
+      }
+      &:first-child {
+        border-left: none;
+      }
+
+      background-position: 10px center;
+      background-repeat: no-repeat;
+
+      font-size: 12px;
+      font-family: Arial;
+    }
+  }
+}
+
+.twitter {
+  background-image: url('images/header_twitter.png');
+}
+.support {
+  background-image: url('images/header_contactsupport.png');
+}
+.rss {
+  background-image: url('images/header_rss.png');
+}
+
+header {
+  h3 {
+    @image-height: 93px;
+
+    position: relative;
+    &:before {
+      content: ' ';
+      position: absolute;
+      top: 10px;
+      left: 0;
+      background-position: center center;
+      background-repeat: no-repeat;
+
+      width: 100%;
+      height: @image-height;
+    }
+
+    display: block;
+    text-align: center;
+    padding-top: 10px + @image-height;
+
+    height: 24px;
+    font-size: 24px;
+    font-family: MuseoSlab500Regular;
+    font-weight: 400;
+  }
+
+  h3.status-stormy {
+    color: #c00;
+    &:before {
+      background-image: url('images/status_incident.png');
+    }
+  }
+  h3.status-cloudy, h3.status-foggy {
+    color: #d49e00;
+    &:before {
+      background-image: url('images/status_maintenance.png');
+    }
+  }
+  h3.status-sunny {
+    color: #01b42e;
+    &:before {
+      background-image: url('images/status_ok.png');
+    }
+  }
+}
+
+header {
+  p {
+    margin: 30px 0;
+    font-size: 1.4rem;
+    font-size: 14px;
+    color: #666;
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    p {
+      margin: 60px 0;
+    }
+  }
+}
+
+header {
+  .services-up {
+    display: none;
+  }
+
+  .services, .services-up {
+    margin-top: 30px;
+    text-align: center;
+
+
+    > div {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      position: relative;
+
+      border-radius: 8px;
+      margin: 0 15px 30px;
+
+      padding: 10px;
+
+      background-position: center 45px;
+      background-repeat: no-repeat;
+      &.status-cloudy {
+        background-image: url('images/status_maintenance_detail.png');
+        background-color: #f6e4b1;
+        a {
+          color: #d49e00;
+        }
+      }
+      &.status-stormy {
+        background-image: url('images/status_incident_detail.png');
+        background-color: #fbb4b4;
+        a {
+          color: #c00;
+        }
+      }
+      &.status-sunny {
+        background-image: url('images/status_ok_detail.png');
+        background-color: #c3eccd;
+        a {
+          display: none;
+        }
+      }
+
+      a {
+        display: block;
+        bottom: 10px;
+        left: 0;
+        width: 100%;
+        position: absolute;
+        text-align: center;
+
+        font-size: 14px;
+        font-size: 1.4rem;
+        color: #01b42e;
+      }
+
+      h4 {
+        font-size: 16px;
+        font-family: MuseoSlab500Regular;
+      }
+    }
+  }
+}
+
+header {
+  > .button {
+    display: inline;
+    padding: 5px 15px;
+    border-radius: 5px;
+
+    border: 0;
+
+    text-shadow: 1px 1px 0 #fff;
+    background: #d9d9d9;
+
+    color: #666;
+    font-size: 14px;
+
+    cursor: pointer;
+
+    &:focus, &:hover {
+      background: #c9c9c9;
+      color: #333;
+    }
+  }
+}
+
+header {
+  > a.button, > p{
+    // elements are displayed using javascript, once ready
+    display: none;
+  }
+}
+
+
+header {
+  padding-bottom: 100px;
+  > .more {
+    position: absolute;
+    bottom: 0;
+
+    color: #999;
+
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    display: block;
+
+    text-decoration: none;
+
+    font-size: 18px;
+    font-size: 1.8rem;
+
+    font-family: MuseoSlab500Regular;
+    font-weight: 400;
+
+    &:after {
+      content: ' ';
+      display: block;
+      border-top: 8px solid #999;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+
+      width: 0;
+      height: 0;
+
+      margin-top: 10px;
+      margin-left: auto;
+      margin-right: auto;
+
+    }
+  }
+}
+
+
+header > .maintenances {
+  display: none;
+
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  padding: 10px 20px;
+  text-align: left;
+  font-size: 14px;
+  font-size: 1.4rem;
+  > h2 {
+    font-family: "MuseoSlab500Regular";
+    font-weight: normal;
+  }
+  > h2, p {
+    margin: 10px 0;
+  }
+}

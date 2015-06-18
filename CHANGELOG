@@ -1,0 +1,119 @@
+Baobab  changelog
+=================
+
+1.0.0
+-----
+ * open sourcing
+
+0.4.4
+-----
+ * front:
+   - Add eventlogs in the public event page
+   - Some CSS and HTML enhancements:
+     - link to rss and back to gandi
+     - roboto font used instead of browser's default serif font
+     - align start / end dates
+     - use shorter dates when they're less than 18 hours from now
+     - background to #fafafa instead of #ffffff
+   - Standardization on dates
+   - Add markdown documentation link
+ - Fix static file between django and nginx
+ * rss: WARNING need a migration [BACKOFFICE]
+  - add a field 'last_update' in 'Event'
+  - datamigration to correctly set 'last_update'
+  - entry is update if a new eventlog is added or if the date_end is defined
+  - a tag [STARTED], [UPDATE] or [FINISHED] is added on an entry
+  - <description> contains more information about the event:
+    - eventlogs
+    - last update
+    - date start
+    - date_end
+    - impacted services
+  - the 'last_update' field is added into the backoffice and the REST API
+ * api: update /events to also output the 'last_update' field
+
+0.4.3
+-----
+  * api: new filter for /events:
+    - date_end=null to filter on 'date_end IS NULL'
+    - current=true or current=false to get the current (or not) event
+
+0.4.2
+-----
+ * the data send by the API are translatable
+  - create a new app: translate
+  - create a group: translate - traductor need to be in that group
+ * fix the estimate_date_end not always updated
+ * create a new module 'cron' to simplify the creation of new cron
+ * add a new cron: 'close_event'
+ * api: route /events add filter 'isnull' on a date_end
+ * api: correctly handle error for filter category and services
+        handle case insensitive for filter category and services
+ * front: don't show 'Maintenance' event on timeline before they start
+ * add RSS and Atom support
+ * fix date return by the api: in some case microsecond was set
+
+0.4.1
+-----
+ * API new value: FOGGY
+   use when an on going incident doesn't impact any services
+   it's only available as a global status and not for a service
+
+0.3.8
+-----
+ * api rest better output on text/html:
+  - add 2 variables in the settings:
+   - TITLE_SCHEMA
+   - TITLE_RESULT
+ * api rest handle 404:
+  - add a variable in the settings:
+   - HTTP_NOT_FOUND
+
+0.3.3
+-----
+ * apirest better handling on Exception
+  - add 2 variables in the settings:
+    HTTP_NOT_IMPLEMENTED_ERROR
+    HTTP_APPLICATION_ERROR
+
+0.3.2
+-----
+ * create a Twitter lib
+   - need to update the settings:
+      TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET,
+      TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET,
+      URL_EVENT
+   - need to create a app in the twitter's noc account:
+       https://apps.twitter.com/ (the Callback URL is not used)
+   - need to allow the account itself to use the app
+   - add a new dependence: python-oauth2
+
+0.2.11
+------
+ * New dependency: django-htmlmin (django-htmlmin < 0.7.0)
+ * Update settings:
+  - add the varaible: HTML_MINIFY = True
+  - update the varaible: MIDDLEWARE_CLASSES with:
+    'django.middleware.gzip.GZipMiddleware'
+    'htmlmin.middleware.HtmlMinifyMiddleware'
+  - add the variable USE_ETAGS
+
+0.0.2
+-----
+ * [api]
+     change those routes:
+       status: now return the global status: sunny, cloudy, stormy
+       services: add a filed status
+     only allow get request
+     redfine the date serializer to always return a UTC datetime in iso 8601
+ * [backoffice] WARNING need a migration
+                a user can set its own timezone
+ * [settings]
+     update a variable to auto set the user's timezone
+       MIDDLEWARE_CLASSES = (
+         'baobab.utils.set_current_timezone.TimezoneMiddleware'
+       )
+
+0.0.1
+-----
+ * initial release

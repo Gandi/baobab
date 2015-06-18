@@ -1,0 +1,5 @@
+#!/bin/sh
+# might be call by git pull --rebase -> so call post-merge
+echo '--> post-rewrite'
+ROOT=$(git rev-parse --show-toplevel)
+${ROOT}/.git/hooks/post-merge

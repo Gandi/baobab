@@ -1,0 +1,57 @@
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Editor stuff
+*~
+.#*
+\#*#
+.*.swp
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+test-prod-*/
+
+# default (dev) db
+baobab/default.db
+
+# Node
+node_modules
+
+# Angular app
+*.ng/*.sw*
+*.ng/build/
+*.ng/locale/templates
+*.ng/bin/
+*.ng/node_modules/
+*.ng/vendor/
+*.ng/locale/static/*.json
+*.ng/app/spec/output
+*.ng/**/vendor
+
+# Generated assets
+baobab/front/templates/index.html
+baobab/static/public
+

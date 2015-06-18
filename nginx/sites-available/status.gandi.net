@@ -1,0 +1,6 @@
+server {
+        listen  80;
+	listen  [::]:80 default_server ipv6only=on;
+	server_tokens off; 
+	return 301 https://$host$request_uri;
+}

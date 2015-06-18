@@ -1,0 +1,2 @@
+nginx/sites-available/status.gandi.net      etc/nginx/sites-available
+nginx/sites-available/status.gandi.net-ssl  etc/nginx/sites-available

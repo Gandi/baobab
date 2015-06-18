@@ -1,0 +1,6 @@
+<h2>Scheduled operations</h2>
+{{~it :maintenance}}
+<div>
+  <p><strong>From {{=maintenance.date_start.format('LLLL ZZ')}} to {{=maintenance.estimate_date_end.format('LLLL ZZ')}}</strong> for {{=maintenance.services.join(', ') }} - <a href="/timeline/events/{{=maintenance.id}}">Details</a></p>
+</div>
+{{~}}

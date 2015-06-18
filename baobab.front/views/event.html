@@ -1,0 +1,34 @@
+<ul>
+{{~it.services :value}}
+  <li>{{=value}}</li>
+{{~}}
+</ul>
+<a href="/timeline">✖</a>
+
+<time datetime="{{=it.end_date.format('YYYY-MM-DD')}}">{{=it.end_date.format('MMM')}}<span>{{=it.end_date.format('DD')}}</span>{{=it.end_date.format('YYYY')}}</time>
+
+<h2>{{=it.title}}</h2>
+<span>
+    <span class="date-prefix">{{? it.date_start.isAfter() }} Will start {{??}} Started {{?}}</span> <time class="start" datetime="{{=it.date_start.format()}}" title="{{=it.date_start.format()}}">{{=it.reldate(it.date_start)}}</time>
+    <br>
+  {{? it.date_end}}
+    <span class="date-prefix">Finished </span><time class="end" datetime="{{=it.date_end.format()}}" title="{{=it.date_end.format()}}">{{=it.reldate(it.date_end)}}</time>
+  {{??}}
+    <span class="date-prefix">Should finish </span><time class="end" datetime="{{=it.estimate_date_end.format()}}" title="{{=it.estimate_date_end.format()}}">{{=it.reldate(it.estimate_date_end)}}</time>
+  {{?}}
+  (<time class="duration" datetime="{{=it.duration.toString()}}">{{=it.duration.humanize()}}</time>)</span>
+<div>
+  {{=it['marked'](it.summary)}}
+  <div>
+  {{? it.logs.length > 0}}
+    <ul class="update">
+      <h3>Last updates</h3>
+      {{~it.logs :value}}
+        <li><em>Updated on <time datetime="{{=value.date.format()}}" title="{{=value.date.format()}}">{{=it.reldate(value.date)}}</time></em>:
+          <p> {{=it['marked'](value.comment)}}</p>
+        </li>
+      {{~}}
+    </ul>
+  {{?}}
+  </div>
+</div>

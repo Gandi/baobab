@@ -1,0 +1,54 @@
+server {
+        listen   443;
+	listen   [::]:443 default_server ipv6only=on;
+
+	ssl on;
+        ssl_certificate /etc/ssl/certs/status.gandi.net.all.crt;
+        ssl_certificate_key /etc/ssl/private/status.gandi.net.key;
+
+	ssl_session_timeout 5m;
+
+	ssl_protocols SSLv3 TLSv1;
+	ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:!LOW:+SSLv3:+EXP;
+	ssl_prefer_server_ciphers on;
+
+	index index.html index.htm;
+
+	server_name status.gandi.net;
+
+        access_log /var/log/nginx/status.gandi.net-access.log;
+        error_log /var/log/nginx/status.gandi.net-error.log debug;
+
+        gzip on;
+
+	autoindex off;
+
+	autoindex_exact_size off;
+	autoindex_localtime on;
+
+	location ~ ^/static/admin {
+		root /usr/share/pyshared/django/contrib/admin/;
+	}
+
+        location ~ ^/static/(.*)$ {
+                alias /usr/share/baobab/$1;
+        }
+
+        location = /nginx_status {
+                stub_status on;
+                access_log   off;
+                allow 127.0.0.1;
+                deny all;
+        }
+
+        location / {
+                proxy_pass_header Server;
+                proxy_set_header Host $http_host;
+                proxy_redirect off;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Scheme $scheme;
+                proxy_connect_timeout 300;
+                proxy_read_timeout 200;
+                proxy_pass http://localhost:8008/;
+        }
+}

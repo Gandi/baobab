@@ -1,0 +1,10 @@
+#!/bin/sh
+# in case of a fail merge (CONFLICT) post-merge isn't call
+# since a commit is done so force its call
+
+ROOT=$(git rev-parse --show-toplevel)
+
+if [ -e "${ROOT}/.git/MERGE_HEAD" ]
+then
+    ${ROOT}/.git/hooks/post-merge
+fi

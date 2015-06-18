@@ -1,0 +1,263 @@
+baobab (1.0-0) unstable; urgency=medium
+
+  * New release
+
+ -- Sylvain Leurent <moitux@gandi.net>  Thu, 18 Jun 2015 17:53:13 +0200
+
+baobab (0.5-1) UNRELEASED; urgency=medium
+
+  * New release
+
+ -- Sylvain Leurent <moitux@gandi.net>  Thu, 21 May 2015 18:51:10 +0200
+
+baobab (0.4-4) unstable; urgency=low
+
+  * New release
+
+ -- Sylvain Leurent <moitux@gandi.net>  Thu, 21 May 2015 11:11:37 +0200
+
+baobab (0.4-3) unstable; urgency=low
+
+  * New release
+
+ -- Sylvain Leurent <moitux@gandi.net>  Thu, 26 Mar 2015 01:11:12 +0100
+
+baobab (0.4-2) unstable; urgency=low
+
+  * New release
+
+ -- Sylvain Leurent <moitux@gandi.net>  Thu, 26 Mar 2015 00:43:18 +0100
+
+baobab (0.4-1) unstable; urgency=low
+
+  * New release
+
+ -- Sylvain Leurent <moitux@gandi.net>  Tue, 02 Dec 2014 14:56:46 +0100
+
+baobab (0.3-9) unstable; urgency=low
+
+  * New release
+
+ -- Sylvain Leurent <moitux@gandi.net>  Tue, 25 Nov 2014 17:52:04 +0100
+
+baobab (0.3-8) unstable; urgency=medium
+
+  * Fix Debian packaging.
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Wed, 19 Nov 2014 13:54:21 +0100
+
+baobab (0.3-7) unstable; urgency=medium
+
+  * Add a cron file for twitter job.
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Wed, 19 Nov 2014 09:14:12 +0100
+
+baobab (0.3-6) unstable; urgency=low
+
+  * New release
+
+ -- Sylvain Leurent <moitux@gandi.net>  Tue, 28 Oct 2014 18:46:48 +0100
+
+baobab (0.3-5) unstable; urgency=low
+
+  * New release
+
+ -- Sylvain Leurent <moitux@gandi.net>  Mon, 27 Oct 2014 18:57:18 +0100
+
+baobab (0.3-4) unstable; urgency=low
+
+  * New release
+
+ -- Sylvain Leurent <moitux@gandi.net>  Mon, 27 Oct 2014 17:02:57 +0100
+
+baobab (0.3-3) unstable; urgency=low
+
+  * New release
+
+ -- Sylvain Leurent <moitux@gandi.net>  Mon, 27 Oct 2014 13:57:47 +0100
+
+baobab (0.3-2) unstable; urgency=medium
+
+  * New release.
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Mon, 27 Oct 2014 12:10:29 +0100
+
+baobab (0.3-1) unstable; urgency=medium
+
+  * New release.
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Mon, 27 Oct 2014 10:32:16 +0100
+
+baobab (0.2-28) unstable; urgency=medium
+
+  * Support for ie8 
+
+ -- Arthur Gautier <baloo@gandi.net>  Tue, 21 Oct 2014 18:24:09 +0200
+
+baobab (0.2-27) unstable; urgency=medium
+
+  * CORS support
+  * Fixes for safari mobile
+  * No scroll back on event exit
+
+ -- Arthur Gautier <baloo@gandi.net>  Mon, 20 Oct 2014 18:01:00 +0200
+
+baobab (0.2-25) unstable; urgency=medium
+
+  * Typo in estimate date_end handling
+
+ -- Arthur Gautier <baloo@gandi.net>  Thu, 16 Oct 2014 17:25:55 +0200
+
+baobab (0.2-24) unstable; urgency=medium
+
+  * Uglifyjs bug
+
+ -- Arthur Gautier <baloo@gandi.net>  Thu, 16 Oct 2014 16:21:12 +0200
+
+baobab (0.2-23) unstable; urgency=medium
+
+  * Fixup events messages
+  * Handle scheduled maintenances
+
+ -- Arthur Gautier <baloo@gandi.net>  Thu, 16 Oct 2014 15:24:26 +0200
+
+baobab (0.2-22) unstable; urgency=medium
+
+  * no debug messages
+
+ -- Arthur Gautier <baloo@gandi.net>  Thu, 16 Oct 2014 11:39:13 +0200
+
+baobab (0.2-21) unstable; urgency=medium
+
+  * Responsive timeline
+  * Responsive event
+
+ -- Arthur Gautier <baloo@gandi.net>  Thu, 16 Oct 2014 10:35:20 +0200
+
+baobab (0.2-20) unstable; urgency=medium
+
+  * Fix timezone handling
+  * Enforce using applicatoin/json
+
+ -- Arthur Gautier <baloo@gandi.net>  Wed, 15 Oct 2014 18:49:37 +0200
+
+baobab (0.2-19) unstable; urgency=medium
+
+  * Local timezone
+
+ -- Arthur Gautier <baloo@gandi.net>  Wed, 15 Oct 2014 18:30:59 +0200
+
+baobab (0.2-18) unstable; urgency=medium
+
+  * Q version
+
+ -- Arthur Gautier <baloo@gandi.net>  Wed, 15 Oct 2014 15:03:41 +0200
+
+baobab (0.2-17) unstable; urgency=medium
+
+  * Fix packaging process.
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Wed, 15 Oct 2014 10:34:23 +0200
+
+baobab (0.2-16) unstable; urgency=medium
+
+  * New release with bugfixes
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Tue, 07 Oct 2014 15:11:55 +0200
+
+baobab (0.2-15) unstable; urgency=medium
+
+  * Change default user creation
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Mon, 06 Oct 2014 12:03:00 +0200
+
+baobab (0.2-14) unstable; urgency=medium
+
+  * Gzip content
+  * Minify images
+
+ -- Arthur Gautier <baloo@gandi.net>  Sat, 04 Oct 2014 21:29:22 +0200
+
+baobab (0.2-13) unstable; urgency=medium
+
+  * Fix cache handling
+
+ -- Arthur Gautier <baloo@gandi.net>  Sat, 04 Oct 2014 15:50:23 +0200
+
+baobab (0.2-12) unstable; urgency=medium
+
+  * Fix for database init.
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Fri, 03 Oct 2014 15:30:21 +0200
+
+baobab (0.2-11) unstable; urgency=medium
+
+  * New version
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Thu, 02 Oct 2014 14:27:36 +0200
+
+baobab (0.2-10) unstable; urgency=medium
+
+  * Adapt Debian pacakge to the new javascript/css toolchain.
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Tue, 09 Sep 2014 11:01:53 +0200
+
+baobab (0.2-9) unstable; urgency=medium
+
+  * Fix on the event content.
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Thu, 14 Aug 2014 13:08:32 +0200
+
+baobab (0.2-8) unstable; urgency=medium
+
+  * Fix javascript generation for production.
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Wed, 13 Aug 2014 15:37:12 +0200
+
+baobab (0.2-7) unstable; urgency=medium
+
+  * Missing files for the angularjs app.
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Wed, 13 Aug 2014 14:54:36 +0200
+
+baobab (0.2-6) unstable; urgency=medium
+
+  * Add template and fix process.
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Wed, 13 Aug 2014 13:48:21 +0200
+
+baobab (0.2-5) unstable; urgency=medium
+
+  * Fix packaging
+
+ -- Nicolas Chipaux <aegiap@gandi.net>  Tue, 12 Aug 2014 17:36:51 +0200
+
+baobab (0.2-4) unstable; urgency=low
+
+  * Fix release version.
+
+ -- Emerick Mounoury <emerick@gandi.net>  Mon, 12 May 2014 12:10:09 +0200
+
+baobab (0.0.2-3) unstable; urgency=low
+
+  *  Fix typos
+
+ --  <emerick@gandi.net>  Mon, 12 May 2014 09:04:38 +0000
+
+baobab (0.0.2-2) unstable; urgency=low
+
+  * Fix typo
+
+ -- Sylvain Leurent <moitux@gandi.net>  Wed, 07 May 2014 18:35:37 +0200
+
+baobab (0.0.2-1) unstable; urgency=low
+
+  * New version upstream.
+
+ -- Sylvain Leurent <moitux@gandi.net>  Wed, 07 May 2014 17:53:54 +0200
+
+baobab (0.0.1-1) unstable; urgency=low
+
+  * First release.
+
+ -- Sylvain Leurent <moitux@gandi.net>  Thu, 10 Apr 2014 14:30:55 +0200

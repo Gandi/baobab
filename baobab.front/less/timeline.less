@@ -1,0 +1,417 @@
+@body-background: #fafafa;
+
+html {
+}
+body {
+  overflow: hidden;
+  background-color: @body-background;
+}
+#container {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  position: relative;
+}
+
+aside {
+  position: absolute;
+
+  width: 100%;
+  left: 0;
+
+  line-height: 50px;
+  height: 50px;
+  text-align: center;
+
+  select {
+    vertical-align: middle;
+
+    padding: 5px 15px;
+
+    border: 0;
+    border-radius: 5px;
+    background: #d9d9d9;
+
+  }
+}
+
+aside {
+  h2, select {
+    text-align: center;
+  }
+  h2 {
+    width: 50%;
+    position: absolute;
+
+    &:last-child { 
+      margin-left: 50%;
+    }
+    &.last-child {
+      margin-left: 50%;
+    }
+
+    font-size: 16px;
+    font-size: 1.6rem;
+    font-family: MuseoSlab500Regular;
+  }
+}
+
+main {
+  min-height: 100%;
+
+  padding-top: 100px;
+}
+
+
+main {
+  section {
+    position: relative;
+
+    width: 100%;
+    height: 240px;
+
+    > time {
+      @size: 100px;
+
+      position: absolute;
+
+      width: @size;
+      height: @size;
+
+      top: 50%;
+      left: 50%;
+      margin-left: -1 * @size/2;
+      margin-top: -1 * @size/2;
+
+      background-color: #000;
+      border-radius: 50%;
+      border: 8px solid #ccc;
+
+      text-align: center;
+      color: #fff;
+
+      box-sizing: border-box;
+
+      z-index: 2;
+
+      padding: 5px 10px;
+      font-family: MuseoSlab500Regular;
+      font-weight: 400;
+
+      font-size: 1.4rem;
+
+      line-height: 24px;
+      vertical-align: baseline;
+
+      span {
+        display: block;
+
+        font-size: 26px;
+        font-size: 2.6rem;
+        font-weight: 700;
+      }
+    }
+
+    &:before, &:after {
+      content: ' ';
+      position: absolute;
+      height: 100%;
+      left: 50%;
+      top: 0;
+      width: 3px;
+      background-color: #0f0;
+      z-index: -1;
+    }
+
+    &:before {
+      margin-left: -4px;
+    }
+    &:after {
+      margin-left: 1px;
+    }
+
+  }
+}
+
+main {
+  article {
+    position: relative;
+    width: 50%;
+  }
+  article p{
+    height: 60px;
+    width: 200px;
+    z-index: 1; /* workaround for events finishing at midnight */
+
+    padding: 10px;
+
+    font-size: 14px;
+    font-family: Arial;
+
+    span {
+      display: block;
+    }
+
+    cursor: pointer;
+  }
+
+  article:before {
+    z-index: -1;
+    content: ' ';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    box-sizing: border-box;
+
+  }
+
+  article:after {
+    content: ' ';
+    position: absolute;
+    width: 3px;
+    height: 100%;
+
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+  }
+
+  article.incident {
+    position: absolute;
+    left: 0;
+    p {
+      position: absolute;
+      left: 10px;
+      background: #eeb1b1;
+      border-radius: 10px 0 10px 10px;
+    }
+    &:before {
+      border-top: 1px dashed #eeb1b1;
+      border-left: 200px solid @body-background;
+      border-right: 2px solid @body-background;
+    }
+    &:after {
+      background-color: #eeb1b1;
+      right: 1px;
+    }
+  }
+  article.maintenance {
+    position: absolute;
+    right: 0;
+    p {
+      position: absolute;
+      right: 10px;
+      background: #fbbc43;
+      border-radius: 0 10px 10px 10px;
+    }
+    &:before {
+      border-top: 1px dashed #fbbc43;
+      border-right: 200px solid #fff;
+      border-left: 2px solid #fff;
+    }
+    &:after {
+      background-color: #fbbc43;
+      left: 1px;
+    }
+  }
+}
+
+main {
+  article.incident:hover {
+    &:after {
+      background-color: #d63e3e;
+    }
+    &:before {
+      border-top: 1px dashed #d63e3e;
+    }
+    p {
+      background-color: #d63e3e;
+    }
+  }
+  article.maintenance:hover {
+    &:after {
+      background-color: #feaa09;
+    }
+    &:before {
+      border-top: 1px dashed #feaa09;
+    }
+    p {
+      background-color: #feaa09;
+    }
+  }
+  article:hover {
+    p {
+      z-index: 10;
+    }
+  }
+}
+
+// Attempt to reduce day size
+//main {
+//  section {
+//    @size: 50px;
+//    &.empty {
+//      height: 3 * @size;
+//      > time {
+//        width: @size;
+//        height: @size;
+//        margin-left: -1 * @size/2;
+//        margin-top: -1 * @size/2;
+//      }
+//    }
+//  }
+//}
+
+main {
+  section {
+    border-bottom: 1px dashed rgba(204, 204, 204, 0.5);
+  }
+}
+
+main {
+  article.hidden {
+    display: none;
+  }
+  article.shown {
+    display: block;
+  }
+
+  &.filtered-category {
+    article {
+      &:extend(main article.hidden);
+    }
+
+    .category-mixin(@category) {
+      &.cat-@{category} {
+        article.@{category}{
+          &:extend(main article.shown);
+        }
+      }
+    }
+
+    .category-mixin(maintenance);
+    .category-mixin(incident);
+  }
+  &.filtered-service{
+    article {
+      &:extend(main article.hidden);
+    }
+
+    .service-mixin(@service) {
+      &.svc-@{service} {
+        article.@{service}{
+          &:extend(main article.shown);
+        }
+      }
+    }
+
+    .service-mixin(iaas);
+    .service-mixin(paas);
+    .service-mixin(site);
+    .service-mixin(api);
+    .service-mixin(ssl);
+    .service-mixin(domain);
+    .service-mixin(email);
+  }
+
+  &.filtered-category-service {
+    article {
+      &:extend(main article.hidden);
+    }
+
+    .service-mixin(@service, @category) {
+      &.svc-@{service}.cat-@{category} {
+        article.@{service}.@{category} {
+          &:extend(main article.shown);
+        }
+      }
+    }
+
+
+    .category-mixin(@category) {
+      .service-mixin(iaas, @category);
+      .service-mixin(paas, @category);
+      .service-mixin(site, @category);
+      .service-mixin(api, @category);
+      .service-mixin(ssl, @category);
+      .service-mixin(domain, @category);
+      .service-mixin(email, @category);
+    }
+
+    .category-mixin(maintenance);
+    .category-mixin(incident);
+  }
+}
+
+@media (max-width: 600px) {
+  main {
+    section {
+      &.empty {
+        display: none;
+      }
+      border-bottom: 0;
+      &:before {
+        display: none;
+      }
+      &:after {
+        display: none;
+      }
+      > time {
+        top: 0;
+        margin-top: 0;
+      }
+      padding-top: 110px;
+      height: auto;
+      article {
+        top: 0 !important;
+        height: auto !important;
+        width: 100%;
+
+        padding-left: 5%;
+        padding-right: 5%;
+        box-sizing: border-box;
+
+        margin-bottom: 10px;
+
+        p {
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        &.maintenance, &.incident {
+          position: relative;
+          p {
+            position: relative;
+            border-radius: 5px;
+            right: auto;
+            left: auto;
+          }
+        }
+
+        &:before, &:after {
+          display: none;
+        }
+
+      }
+    }
+  }
+
+  aside {
+    select {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 10px;
+
+      width: 100%;
+      font-size: 16px; // 16 px is the bare minimum so that iOS considers the 
+                       // text as readable, thus non zooming over the select
+    }
+
+    h2 {
+      display: none;
+    }
+  }
+}
+
+

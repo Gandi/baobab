@@ -1,0 +1,59 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+export NPM_CONFIG_STRICT_SSL=false
+export NODE_ENV=production
+
+# XXX TOFIX this is dirty
+export NPM_CONFIG_CACHE=$(shell mktemp -d --suffix=baobab)
+export HOME=$(NPM_CONFIG_CACHE)
+
+# default value for npm registry
+
+
+%:
+	dh $@ --with=python2
+
+override_dh_builddeb:
+	dh_builddeb
+	if [ ! -z $$NPM_CONFIG_CACHE ] && [ -d $$NPM_CONFIG_CACHE ]; then \
+            rm -rf $$NPM_CONFIG_CACHE; \
+        fi
+	if [ `expr match $$HOME /tmp` = 4 ] && [ -d $$HOME ]; then \
+            rm -rf $$HOME; \
+        fi
+
+override_dh_auto_install:
+	install -d -m 0755 debian/python-baobab/usr/share/baobab/
+	install -d -m 0755 $(NPM_CONFIG_CACHE)
+	
+	npm install
+	npm run release
+	cp -rf baobab/static/* debian/python-baobab/usr/share/baobab/
+	dh_auto_install
+	find debian/python-baobab -type f -iname "*.js" -exec chmod 0644 {} \;
+	
+	[ `expr match $$HOME /tmp` = 4 ] && rm -rf $$HOME
+	
+override_dh_clean:
+	dh_clean
+	rm -rf build
+	rm -rf baobab.ng/build
+	rm -rf baobab.egg-info build baobab/__init__.pyc
+	[ `expr match $$HOME /tmp` = 4 ] && rm -rf $$HOME
+	if [ ! -z $$NPM_CONFIG_CACHE ] && [ -d $$NPM_CONFIG_CACHE ]; then \
+            rm -rf $$NPM_CONFIG_CACHE; \
+        fi
+	if [ `expr match $$HOME /tmp` = 4 ] && [ -d $$HOME ]; then \
+            rm -rf $$HOME; \
+        fi
+
+override_dh_installcron:
+	dh_installcron --name=baobab
+
+override_dh_installinit:
+	dh_installinit --no-restart-on-upgrade --name=baobab-syncdb
+
+.PHONY: override_dh_auto_install, override_dh_clean, override_dh_installcron, override_dh_builddeb, override_dh_instalinit

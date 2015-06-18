@@ -1,0 +1,33 @@
+#!/bin/sh
+#In most case the order of the south migration doesn't really maters
+#just add --merge to fix the warning
+#In case the same model has change it might be better to 're-do'
+#a new migration, also having a real order for the migration can
+#be better for the MEP
+
+
+ROOT=$(git rev-parse --show-toplevel)
+
+CMD="python ${ROOT}/baobab/bin/cmd_baobab.py"
+
+for dir in $(find "${ROOT}" -name migrations)
+do
+  nb_file=$(ls ${dir}/*.py | wc -l)
+  nb_file=$(expr $nb_file - 1)  # need to remove 1 for __init__.py
+  last_idx=$(ls -r ${dir}/*.py | head -2 | tail -1 | cut -d _ -f 1)
+  last_idx=${last_idx##*/}  # remove all path to just get the number
+  if [ $nb_file -ne $last_idx ]
+  then
+    echo ''
+    echo ' *** Might be great to re-order the migration ' \
+         'or redo them entirely ***'
+    echo ''
+  fi
+done
+
+has_migration=$(${CMD} migrate --list 2>&1 | grep '( )')
+
+if [ ! -z "${has_migration}" ]
+then
+  echo 'New migration need to be apply !!!'
+fi

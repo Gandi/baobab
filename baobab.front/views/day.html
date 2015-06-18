@@ -1,0 +1,23 @@
+<section {{? it.events.length === 0}}class="empty"{{?}}>
+  <time datetime="{{=it.day.format('YYYY-MM-DD')}}">
+    {{=it.day.format('MMM')}}
+    <span>{{=it.day.format('D')}}</span>
+    {{=it.day.format('YYYY')}} 
+  </time>
+  {{~it.events :value}}
+    <article class="{{=value.category.toLowerCase()}} {{~value.services :el}}{{=el.toLowerCase()}} {{~}}" style="height: {{=value.height}}; top: {{=value.pos}}" data-href="/timeline/events/{{=value.id}}">
+      <p>{{=value.title}}
+        {{? value.date_start.isAfter()}}
+        <span>Will start <time datetime="{{=value.date_start.format()}}">{{=value.date_start.fromNow()}}</time></span>
+        {{??}}
+        {{? value.date_end}}
+        <span>Lasted <time datetime="{{=value.duration.toString()}}">{{=value.duration.humanize()}}</time></span>
+        {{??}}
+        <span>Started <time datetime="{{=value.date_start.format()}}">{{=value.date_start.fromNow()}}</time></span>
+        {{?}}
+        {{?}}
+      </p>
+
+    </article>
+  {{~}}
+</section>

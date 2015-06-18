@@ -1,0 +1,7 @@
+some git hooks can help you with south
+ - https://gist.github.com/gurglet/1780139
+ - https://github.com/agiliq/compass
+ - https://github.com/MoiTux/compass (a fork of the previous one)
+
+or use the hooks file in this directory it will just just inform you
+that you have some new/old migrations
