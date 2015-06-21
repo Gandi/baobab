@@ -8,7 +8,7 @@ from django.core.urlresolvers import RegexURLPattern, RegexURLResolver
 from tastypie.test import ResourceTestCase
 
 from baobab.apirest.urls import ApiUrls
-from baobab.apirest.tests.schema import TestSchema
+from baobab.apirest.tests.test_schema import TestSchema
 
 
 class TestRoute(ResourceTestCase):

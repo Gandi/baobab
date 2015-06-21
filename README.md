@@ -271,6 +271,11 @@ Submit unit tests for your changes. Run the full test suite on your branch befor
 
 Update the documentation when creating or modifying features.
 
+## Code status
+
+[![Build Status](https://travis-ci.org/Gandi/baobab.svg?branch=master)](https://travis-ci.org/Gandi/baobab)
+[![Coverage Status](https://coveralls.io/repos/Gandi/baobab/badge.svg?branch=master)](https://coveralls.io/r/Gandi/baobab?branch=master)
+
 ## LICENSE
 
 Please see the `LICENSE` file.
