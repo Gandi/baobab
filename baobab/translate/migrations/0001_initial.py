@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('backoffice', '0002_create_services_and_set_timezone_enm'),
+        ('backoffice', '0001_initial'),
     ]
 
     operations = [

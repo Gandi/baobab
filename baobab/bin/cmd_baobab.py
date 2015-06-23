@@ -75,12 +75,9 @@ def main():
         execute_from_command_line(argv)
         sys.exit(0)
 
-    if argv[1] == 'syncdb':
+    if argv[1] == 'migrate':
         # will create the db, run all migration, add a default user
-        execute_from_command_line([argv[0],
-                                   'syncdb',
-                                   '--migrate',
-                                   '--noinput'])
+        execute_from_command_line([argv[0], 'migrate', '--noinput'])
         default_user()
     elif argv[1] == 'setup-dev':
         HandleSouth.disable()
