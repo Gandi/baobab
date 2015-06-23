@@ -19,8 +19,8 @@ with open(os.path.join(here, name, '__init__.py')) as v_file:
                          re.S).match(v_file.read()).group(1)
 
 # WARNING: the db has to handle the COALESCE function
-requires = ['Django>1.6',
-            'django-tastypie>0.10.0',
+requires = ['Django==1.7',
+            'django-tastypie==0.12.0',
             'pytz',
             'oauth2',
             'markdown',
