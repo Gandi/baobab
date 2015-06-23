@@ -13,7 +13,7 @@ import pytz
 from django.core.management import execute_from_command_line, call_command
 from django.conf import settings
 
-from baobab.utils.handle_south import HandleSouth
+from baobab.cron import exec_cron
 
 
 def default_user():
@@ -80,15 +80,13 @@ def main():
         execute_from_command_line([argv[0], 'migrate', '--noinput'])
         default_user()
     elif argv[1] == 'setup-dev':
-        HandleSouth.disable()
+        execute_from_command_line([argv[0], 'migrate', '--noinput'])
         fixtures = []
         for rep in settings.FIXTURE_DIRS:
             tmp = map(lambda x: x.split('.', 1)[0], os.listdir(rep))
             fixtures.extend(filter(lambda x: x.startswith('db_'), tmp))
-            call_command('syncdb', interactive=False)
-            default_user()
-            print 'loading fixtures ...'
-            call_command('loaddata', *fixtures, verbosity=0)
+        print 'loading fixtures ...'
+        call_command('loaddata', *fixtures, verbosity=0)
     elif len(argv) > 2 and argv[1] == 'migrate' and argv[2] == 'fixtures':
         sys.argv.append('test')
         execute_from_command_line([argv[0], 'migrate_fixtures'])
