@@ -77,7 +77,8 @@ def main():
 
     if argv[1] == 'migrate':
         # will create the db, run all migration, add a default user
-        execute_from_command_line([argv[0], 'migrate', '--noinput'])
+        argv.append('--noinput')
+        execute_from_command_line(argv)
         default_user()
     elif argv[1] == 'setup-dev':
         execute_from_command_line([argv[0], 'migrate', '--noinput'])
