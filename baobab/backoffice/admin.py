@@ -48,8 +48,11 @@ class EventAdmin(ModelAdmin):
 
     list_filter = ('services__name', 'date_start', 'last_update', 'category')
     fieldsets = [
-        ('Real duration of the event',
-         {'fields': (('date_start', 'date_end'), )}),
+        ('Real duration of the event ()',
+         {'description': ("it used your browser's clock and will be converted "
+                          'to UTC based on <a href="/admin/backoffice/'
+                          'timezone/">your timezone</a>'),
+          'fields': (('date_start', 'date_end'), )}),
         ('To define the estimated date end', {'fields': ('duration', )}),
         (None, {'fields': [('title_en', 'category'), ('summary_en', 'msg')]}),
         (None, {'fields': ('services', )}),
