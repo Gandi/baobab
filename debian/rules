@@ -2,7 +2,7 @@
 # -*- makefile -*-
 
 # Uncomment this to turn on verbose mode.
-export DH_VERBOSE=1
+export DH_VERBOSE=0
 export NPM_CONFIG_STRICT_SSL=false
 export NODE_ENV=production
 
@@ -29,20 +29,27 @@ override_dh_auto_install:
 	install -d -m 0755 debian/python-baobab/usr/share/baobab/
 	install -d -m 0755 $(NPM_CONFIG_CACHE)
 	
+	if [ ! -z $$NPM_CONFIG_REGISTRY ]; then \
+            cp npm-shrinkwrap.json npm-shrinkwrap.json.backup; \
+	    sed -i -e "s,https://registry.npmjs.org,$$NPM_CONFIG_REGISTRY,g" \
+	        npm-shrinkwrap.json; \
+	fi
+	
 	npm install
 	npm run release
 	cp -rf baobab/static/* debian/python-baobab/usr/share/baobab/
 	dh_auto_install
 	find debian/python-baobab -type f -iname "*.js" -exec chmod 0644 {} \;
 	
-	[ `expr match $$HOME /tmp` = 4 ] && rm -rf $$HOME
-	
+	if [ -e npm-shrinkwrap.json.backup ]; then \
+	    mv -f npm-shrinkwrap.json.backup npm-shrinkwrap.json ; \
+	fi
+
 override_dh_clean:
 	dh_clean
 	rm -rf build
 	rm -rf baobab.ng/build
 	rm -rf baobab.egg-info build baobab/__init__.pyc
-	[ `expr match $$HOME /tmp` = 4 ] && rm -rf $$HOME
 	if [ ! -z $$NPM_CONFIG_CACHE ] && [ -d $$NPM_CONFIG_CACHE ]; then \
             rm -rf $$NPM_CONFIG_CACHE; \
         fi
