@@ -1,7 +1,7 @@
 assets
 images
 main*.css
-js
+/js
 
 *.gz
 rev-manifest.json
