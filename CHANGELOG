@@ -1,6 +1,11 @@
 Baobab  changelog
 =================
 
+1.0.1
+-----
+  * add missing js file for the django's admin
+  * fix js dependence: html5shiv upgrade from 3.7.2 to 3.7.3
+
 1.0.0
 -----
  * open sourcing
