@@ -25,7 +25,7 @@
     "gulp-rev": "^1.1.0",
     "gulp-rev-css-url": "0.0.8",
     "gulp-uglify": "^1.0.1",
-    "html5shiv": "^3.7.2",
+    "html5shiv": "^3.7.3",
     "imagemin-pngquant": "^4.0.0",
     "jquery-browserify": "^1.8.1",
     "marked": "^0.3.2",

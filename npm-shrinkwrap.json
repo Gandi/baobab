@@ -13461,9 +13461,9 @@
       }
     },
     "html5shiv": {
-      "version": "3.7.2",
-      "from": "html5shiv@^3.7.2",
-      "resolved": "https://registry.npmjs.org/html5shiv/-/html5shiv-3.7.2.tgz"
+      "version": "3.7.3",
+      "from": "html5shiv@^3.7.3",
+      "resolved": "https://registry.npmjs.org/html5shiv/-/html5shiv-3.7.3.tgz"
     },
     "imagemin-pngquant": {
       "version": "4.0.0",
