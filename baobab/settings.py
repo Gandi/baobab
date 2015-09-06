@@ -179,6 +179,7 @@ INSTALLED_APPS = (
     'baobab.front',
     'baobab.translate',
     'baobab.rss',
+    'baobab.socialnetwork',
 )
 
 APPEND_SLASH = False

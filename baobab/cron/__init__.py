@@ -21,7 +21,7 @@ XXX
      - None (???)
 """
 
-from .twitter import cron_twitter
+from .socialnetwork import cron_social_network
 from .close_event import cron_close_event
 
 

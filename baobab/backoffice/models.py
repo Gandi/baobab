@@ -14,8 +14,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.timezone import now
 
-from baobab.utils.social_network import Twitter
-
 from baobab.backoffice.modelmanager import EventManager
 
 
@@ -106,10 +104,8 @@ class Event(models.Model):
     )
     category = models.PositiveSmallIntegerField(choices=CATEGORY_CHOICES,
                                                 help_text='Type of the Event')
-    msg_id = models.CharField(null=True, default=None, max_length=30)
-    # XXX Twitter field for safety more than what's needed
-    msg = models.CharField('Twitter', max_length=255, null=True, blank=True,
-                           default=None)
+    msg = models.CharField('Social Network', max_length=255,
+                           null=True, blank=True, default=None)
 
     def __unicode__(self):
         return self.title
@@ -148,9 +144,8 @@ class EventLog(models.Model):
 
     event = models.ForeignKey('Event', related_name='eventlogs')
     user = models.ForeignKey(User, related_name='eventlogs')
-    msg_id = models.CharField(null=True, default=None, max_length=30)
-    # XXX Twitter field for safety more than what's needed
-    msg = models.CharField('Twitter', max_length=255, null=True, blank=True)
+    msg = models.CharField('Social Network', max_length=255,
+                           null=True, blank=True)
 
     def save(self, *args, **kwargs):
         super(EventLog, self).save(*args, **kwargs)
@@ -209,20 +204,17 @@ def on_event(instance, raw, **kwargs):
     """
 
     # no trigger when loading fixture
-    # tweet if the message is not empty
-    # do not re-tweet
-    if raw or not instance.msg or instance.msg_id:
+    if raw:
         return
 
     if instance.category == Event.MAINTENANCE and \
             instance.date_start > datetime.now(pytz.timezone('UTC')):
         return
 
-    if Twitter.is_configured():
-        msg_id = Twitter().create(instance.msg, instance.id)
-        if msg_id:
-            instance.msg_id = msg_id
-            instance.save()
+    from baobab.socialnetwork import SocialNetworks
+
+    sn = SocialNetworks()
+    sn.publish(instance)
 
 
 @receiver(post_save, sender=EventLog, dispatch_uid='OnEventLog')
@@ -232,17 +224,14 @@ def on_eventlog(instance, raw, **kwargs):
     """
 
     # no trigger when loading fixture
-    # tweet if the message is not empty
-    # do not re-tweet
-    if raw or not instance.msg or instance.msg_id:
+    if raw:
         return
 
     if instance.event.category == Event.MAINTENANCE and \
             instance.event.date_start > datetime.now(pytz.timezone('UTC')):
         return
 
-    if Twitter.is_configured():
-        msg_id = Twitter().create(instance.msg, instance.event_id)
-        if msg_id:
-            instance.msg_id = msg_id
-            instance.save()
+    from baobab.socialnetwork import SocialNetworks
+
+    sn = SocialNetworks()
+    sn.publish(instance)

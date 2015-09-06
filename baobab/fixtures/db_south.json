@@ -106,5 +106,32 @@
     "app_name": "backoffice",
     "migration": "0008_set_last_update"
   }
+},
+{
+  "pk": 13,
+  "model": "south.migrationhistory",
+  "fields": {
+    "applied": "2015-09-07T11:39:08.419Z",
+    "app_name": "socialnetwork",
+    "migration": "0001_initial"
+  }
+},
+{
+  "pk": 14,
+  "model": "south.migrationhistory",
+  "fields": {
+    "applied": "2015-09-07T09:24:47.875Z",
+    "app_name": "backoffice",
+    "migration": "0009_move_twitter_to_socialnetwork"
+  }
+},
+{
+  "pk": 15,
+  "model": "south.migrationhistory",
+  "fields": {
+    "applied": "2015-09-07T09:24:47.890Z",
+    "app_name": "backoffice",
+    "migration": "0010_auto__del_field_eventlog_msg_id__del_field_event_msg_id"
+  }
 }
 ]

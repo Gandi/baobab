@@ -15,6 +15,7 @@ from baobab.translate.models import Lang as TranslateLang
 from baobab.translate.models import EventData as TranslateEventData
 from baobab.translate.models import EventLogData as TranslateEventLogData
 from baobab.backoffice import models
+from baobab.socialnetwork import SocialNetworks
 
 LOG = logging.getLogger(__name__)
 logging.basicConfig(level=logging.WARNING)
@@ -99,7 +100,7 @@ class EventForm(ModelForm):
 
     class Meta:
         model = models.Event
-        allowed_char = getattr(settings, 'TWITTER_ALLOWED_CHAR', 117)
+        allowed_char = SocialNetworks.get_max_char()
         widgets = {
             'services': CheckboxSelectMultiple(),
             'msg': Textarea(attrs={'cols': math.ceil(allowed_char / 2.0),
@@ -158,7 +159,7 @@ class EventLogForm(ModelForm):
 
     class Meta:
         model = models.EventLog
-        allowed_char = getattr(settings, 'TWITTER_ALLOWED_CHAR', 117)
+        allowed_char = SocialNetworks.get_max_char()
         widgets = {
             'msg': Textarea(attrs={'cols': math.ceil(allowed_char / 2.0),
                                    'rows': 2,
