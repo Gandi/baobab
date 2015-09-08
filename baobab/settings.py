@@ -174,12 +174,14 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'south',
+    # XXX need to be first to be able to path correctly for test
+    #     See TestSocialNetwork.test test_10_get_max_char_ko
+    'baobab.socialnetwork',
     'baobab.backoffice',
     'baobab.apirest',
     'baobab.front',
     'baobab.translate',
     'baobab.rss',
-    'baobab.socialnetwork',
 )
 
 APPEND_SLASH = False
