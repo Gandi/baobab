@@ -7,3 +7,5 @@ add the tests classes here to make them visible to django
 
 from .test_event import TestEvent
 from .test_status import TestStatus
+from .test_event_trigger import TestEventTrigger
+from .test_eventlog_trigger import TestEventLogTrigger
