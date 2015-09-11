@@ -201,6 +201,14 @@ if DEBUG or TEST:
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'syslog': {
+            'format': '%(name)s: [%(process)d] [%(levelname)s] %(message)s',
+        },
+        'console': {
+            'format': '%(asctime)s [%(levelname)s]: %(name)s - %(message)s',
+        }
+    },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
@@ -211,7 +219,27 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'syslog': {
+            'level': 'INFO',
+            'class': 'logging.handlers.SysLogHandler',
+            'address': '/dev/log',
+            'formatter': 'syslog',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'INFO',
+            'stream': 'ext://sys.stdout',
+            'formatter': 'console',
         }
+    },
+    'root': {
+        'level': 'INFO',
+        'handlers': [
+            'console',
+            'syslog',
+        ],
+        'propagate': True,
     },
     'loggers': {
         'django.request': {
