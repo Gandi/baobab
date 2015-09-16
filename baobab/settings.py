@@ -182,6 +182,7 @@ INSTALLED_APPS = (
     'baobab.front',
     'baobab.translate',
     'baobab.rss',
+    'baobab.cron',
 )
 
 APPEND_SLASH = False
