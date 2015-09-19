@@ -34,6 +34,12 @@ class MockSN(SocialNetworkBase):
         self._msg.append((msg, url))
         return len(self._msg)
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
 
 def mock_get_field_by_name():
     class Field(object):

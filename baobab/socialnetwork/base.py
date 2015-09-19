@@ -64,7 +64,8 @@ class SocialNetworks(object):
                     else:
                         event_id = obj.event_id
                     url = self._get_url_event(event_id)
-                    sn_id = sn.publish(msg, url)
+                    with sn:
+                        sn_id = sn.publish(msg, url)
                     LOG.info('publish sn: %s msg: %s, url: %s',
                              sn.name, msg, url)
                     self._mark_as_publish(obj, sn.name, sn_id)
@@ -146,4 +147,10 @@ class SocialNetworkBase(object):
         """
         should raise if it failed
         """
+        raise NotImplementedError()
+
+    def  __enter__(self):
+        raise NotImplementedError()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
         raise NotImplementedError()
