@@ -5,8 +5,7 @@ check that only the expected route are really defined
 
 from django.core.urlresolvers import RegexURLPattern, RegexURLResolver
 
-from tastypie.test import ResourceTestCase
-
+from baobab.utils.test import ResourceTestCase
 from baobab.apirest.urls import ApiUrls
 from baobab.apirest.tests.test_schema import TestSchema
 

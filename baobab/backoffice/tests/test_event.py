@@ -3,8 +3,8 @@ import datetime
 
 from django.db import models
 from django.utils.timezone import now as tz_now
-from django.test import TestCase
 
+from baobab.utils.test import TestCase
 from baobab.backoffice.models import Event
 
 

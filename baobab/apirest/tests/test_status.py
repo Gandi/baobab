@@ -5,8 +5,8 @@ from datetime import timedelta
 from django.utils.timezone import now
 
 from tastypie.http import HttpMethodNotAllowed
-from tastypie.test import ResourceTestCase
 
+from baobab.utils.test import ResourceTestCase
 from baobab.backoffice.models import Event as BOEvent
 
 

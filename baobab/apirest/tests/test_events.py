@@ -3,8 +3,7 @@ import datetime
 
 from django.utils.timezone import now
 
-from tastypie.test import ResourceTestCase
-
+from baobab.utils.test import ResourceTestCase
 from baobab.backoffice.models import (Service as BOService,
                                       EventLog as BOEventLog,
                                       Event as BOEvent)
