@@ -5,3 +5,4 @@ based module to handle all social network
 
 from .base import SocialNetworks
 from .twitter import Twitter
+from .irc import IRC
