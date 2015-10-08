@@ -12,8 +12,6 @@
 # Description: Run when the VM start and sync the database of the baobab running.
 ### END INIT INFO
 
-set -e
-
 NAME=baobab-syncdb
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 CMD=/usr/bin/baobab
