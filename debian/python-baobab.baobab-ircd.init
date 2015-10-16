@@ -1,0 +1,65 @@
+#!/bin/sh
+#
+### BEGIN INIT INFO
+# Provides:          baobab-ircd
+# Required-Start:    $network $local_fs $remote_fs $syslog
+# Required-Stop:     $remote_fs
+# Should-Start:
+# Should-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: init-Script for baobab-ircd
+# Description: Start a client irc for baobab to send data to it.
+### END INIT INFO
+
+NAME=baobab-ircd
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+CMD=/usr/bin/baobab
+PIDFILE=/var/run/$NAME/$NAME.pid
+OPTIONS="ircd"
+CONFFILE="/etc/gandi/baobab.py"
+USER='root'
+
+. /lib/lsb/init-functions
+
+if [ ! -e $CONFFILE ]; then
+    log_failure_msg "$CONFFILE not found."
+    exit 1
+fi
+
+[ ! -f $CMD ] || CMD=`which baobab`
+
+case "$1" in
+    start)
+        PID_DIR=`dirname $PIDFILE`
+        [ ! -d "$PID_DIR" ] && mkdir -p $PID_DIR
+        if [ ! -d "/run/baobab" ]; then
+            mkdir -p "/run/baobab"
+            chown $USER:$USER "/run/baobab"
+        fi
+        log_begin_msg "Starting $NAME"
+        export PYTHONPATH='/etc/'
+        export DJANGO_SETTINGS_MODULE='gandi.baobab'
+        start-stop-daemon --start --quiet \
+                          --chuid $USER:nogroup \
+                          --make-pidfile --pidfile $PIDFILE \
+                          --background \
+                          --exec $CMD -- $OPTIONS
+        ;;
+    stop)
+      start-stop-daemon --stop --quiet \
+                        --pidfile $PIDFILE \
+                        --user $USER
+      ;;
+    status|force-reload|restart|try-restart)
+        # nothing
+        ;;
+    *)
+        log_warning_msg "Usage: /etc/init.d/$NAME start|stop"
+        exit 1
+        ;;
+esac
+
+exit 0
+
+# vim:ts=4:sw=4:

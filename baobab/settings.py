@@ -22,6 +22,9 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+# XXX need the trailing /
+URL_EVENT = 'http://a.url/timeline/events/'
+
 # twitter info
 # TWITTER_CONSUMER_KEY = ""
 TWITTER_CONSUMER_SECRET = ""
@@ -35,7 +38,38 @@ TWITTER_URL_SHORTENER = 22
 TWITTER_ALLOWED_CHAR = TWITTER_MAX_CHAR - TWITTER_URL_SHORTENER - 1
 TWITTER_URL_API = 'https://api.twitter.com/1.1/'
 
-URL_EVENT = 'http://a.url/timeline/events/'
+# IRC info
+IRC = [
+    {
+        'nick': 'a_nick',
+        'username': 'a_user_name',
+        'ircname': 'a_irc_name',
+        #'password': "",
+        # 'port': 6697,
+        # 'ssl': True,
+        'server': 'a.server.irc',
+        'channels': [
+            {'name': '#chan', },
+            {'name': '#chan2', 'password': 'pwd_chan2'},
+        ],
+        'prefix': '-all-',
+        'on_welcome': 'Hi everyone',
+        'on_quit': 'Going down for maintance will be back soon',
+    }
+]
+
+IRC_SOCKET_PATH = '/run/baobab/baobab_irc.sock'
+
+# see RFC http://tools.ietf.org/html/rfc2812#page-6
+# -2 for the mandatory end '\r\n'
+IRC_MAX_CHAR = 512 - 2
+# get the longer prefix
+LEN = max(map(lambda x: len(x.get('prefix', '')), IRC))
+IRC_PREFIX_LEN = LEN + 1 if LEN else 0
+# -10 for the id of the event
+IRC_URL_LENGTH = len(URL_EVENT) - 10
+# XXX -1 for the space between the text and the url
+IRC_ALLOWED_CHAR = IRC_MAX_CHAR - IRC_PREFIX_LEN - IRC_URL_LENGTH - 1
 
 # message used by the api
 HTTP_NOT_IMPLEMENTED_ERROR = 'Sorry but it\'s not implemented yet\n'  # 501

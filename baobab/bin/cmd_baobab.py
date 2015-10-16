@@ -3,33 +3,16 @@
 """
 Like the manage.py in django's project with added/overridden command
 
-TODO update the file to use argparse to better handle the agrs
+TODO all 'command' in this file should be move to a real django's command
 """
-from os.path import abspath, dirname
+
 import os
 import sys
 import pytz
 
 from django.core.management import execute_from_command_line, call_command
-
-
-for idx in range(len(sys.argv)):
-    if sys.argv[idx].startswith('--settings'):
-        setting = sys.argv.pop(idx)
-        if '=' in setting:
-            setting = setting.split('=', 1)[1]
-        else:
-            setting = sys.argv.pop(idx)
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', setting)
-        break
-
-# XXX mandatory django won't work without it
-if 'DJANGO_SETTINGS_MODULE' not in os.environ:
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'baobab.settings')
-
 from django.conf import settings
 
-from baobab.cron import exec_cron
 from baobab.utils.handle_south import HandleSouth
 
 
@@ -72,6 +55,22 @@ def default_user():
 def main():
     argv = sys.argv
 
+    # to set DJANGO_SETTINGS_MODULE which is mandatory to use django
+    for idx in range(len(sys.argv)):
+        if sys.argv[idx].startswith('--settings'):
+            setting = sys.argv.pop(idx)
+            if '=' in setting:
+                setting = setting.split('=', 1)[1]
+            else:
+                setting = sys.argv.pop(idx)
+            os.environ.setdefault('DJANGO_SETTINGS_MODULE', setting)
+            break
+    if 'DJANGO_SETTINGS_MODULE' not in os.environ:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'baobab.settings')
+
+    # XXX fixe me need the settings to be configure
+    from baobab.cron import exec_cron
+
     if len(argv) < 2:
         execute_from_command_line(argv)
         sys.exit(0)
@@ -107,6 +106,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # XXX see manger.py
-    sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
     main()
