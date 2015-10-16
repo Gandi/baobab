@@ -60,7 +60,6 @@
   "model": "backoffice.event",
   "fields": {
     "category": 0,
-    "msg_id": null,
     "estimate_date_end": "2014-02-15T21:00:00Z",
     "title": "New Release: db alter",
     "date_end": "2014-02-15T21:30:00Z",
@@ -80,7 +79,6 @@
   "model": "backoffice.event",
   "fields": {
     "category": 1,
-    "msg_id": null,
     "estimate_date_end": "2014-03-02T00:24:00Z",
     "title": "Filer Down",
     "date_end": "2014-03-02T00:24:00Z",
@@ -101,7 +99,6 @@
   "model": "backoffice.event",
   "fields": {
     "category": 1,
-    "msg_id": null,
     "estimate_date_end": "2014-03-02T00:20:00Z",
     "title": "DNS",
     "date_end": "2014-03-02T00:20:00Z",
@@ -121,7 +118,6 @@
   "model": "backoffice.event",
   "fields": {
     "category": 0,
-    "msg_id": null,
     "estimate_date_end": "2014-02-02T17:00:00Z",
     "title": "Update server",
     "date_end": "2014-02-02T17:00:00Z",
@@ -141,7 +137,6 @@
   "model": "backoffice.event",
   "fields": {
     "category": 0,
-    "msg_id": null,
     "estimate_date_end": "2014-02-02T17:00:00Z",
     "title": "Update server v2",
     "date_end": "2014-02-02T17:00:00Z",
@@ -160,7 +155,6 @@
   "model": "backoffice.event",
   "fields": {
     "category": 0,
-    "msg_id": null,
     "estimate_date_end": "2014-02-02T17:00:00Z",
     "title": "Update server v3",
     "date_end": "2014-02-02T17:00:00Z",
@@ -178,120 +172,110 @@
   "pk": 1,
   "model": "backoffice.eventlog",
   "fields": {
-    "comment": "server 1 done\r\n2 more to do\r\n",
-    "msg_id": null,
-    "msg": null,
-    "user": 1,
     "date": "2014-02-02T15:30:00Z",
-    "event": 4
+    "comment": "server 1 done\r\n2 more to do\r\n",
+    "event": 4,
+    "msg": null,
+    "user": 1
   }
 },
 {
   "pk": 2,
   "model": "backoffice.eventlog",
   "fields": {
-    "comment": "server 2 done\r\n1 more to do\r\n",
-    "msg_id": null,
-    "msg": null,
-    "user": 1,
     "date": "2014-02-02T16:15:00Z",
-    "event": 4
+    "comment": "server 2 done\r\n1 more to do\r\n",
+    "event": 4,
+    "msg": null,
+    "user": 1
   }
 },
 {
   "pk": 3,
   "model": "backoffice.eventlog",
   "fields": {
-    "comment": "Everything done as planned",
-    "msg_id": null,
-    "msg": null,
-    "user": 1,
     "date": "2014-02-02T17:05:00Z",
-    "event": 4
+    "comment": "Everything done as planned",
+    "event": 4,
+    "msg": null,
+    "user": 1
   }
 },
 {
   "pk": 4,
   "model": "backoffice.eventlog",
   "fields": {
-    "comment": "everthing's is gooing as plannde for the moment",
-    "msg_id": null,
-    "msg": null,
-    "user": 1,
     "date": "2014-02-15T20:00:00Z",
-    "event": 1
+    "comment": "everthing's is gooing as plannde for the moment",
+    "event": 1,
+    "msg": null,
+    "user": 1
   }
 },
 {
   "pk": 5,
   "model": "backoffice.eventlog",
   "fields": {
-    "comment": "Someting went wrong it might take more time that planned\r\n",
-    "msg_id": null,
-    "msg": null,
-    "user": 1,
     "date": "2014-02-15T20:15:00Z",
-    "event": 1
+    "comment": "Someting went wrong it might take more time that planned\r\n",
+    "event": 1,
+    "msg": null,
+    "user": 1
   }
 },
 {
   "pk": 6,
   "model": "backoffice.eventlog",
   "fields": {
-    "comment": "ok it's done",
-    "msg_id": null,
-    "msg": null,
-    "user": 1,
     "date": "2014-02-15T21:30:00Z",
-    "event": 1
+    "comment": "ok it's done",
+    "event": 1,
+    "msg": null,
+    "user": 1
   }
 },
 {
   "pk": 7,
   "model": "backoffice.eventlog",
   "fields": {
-    "comment": "half of it is back",
-    "msg_id": null,
-    "msg": null,
-    "user": 1,
     "date": "2014-03-01T23:52:00Z",
-    "event": 2
+    "comment": "half of it is back",
+    "event": 2,
+    "msg": null,
+    "user": 1
   }
 },
 {
   "pk": 8,
   "model": "backoffice.eventlog",
   "fields": {
-    "comment": "it will be fixed in time",
-    "msg_id": null,
-    "msg": null,
-    "user": 1,
     "date": "2014-03-02T00:10:00Z",
-    "event": 3
+    "comment": "it will be fixed in time",
+    "event": 3,
+    "msg": null,
+    "user": 1
   }
 },
 {
   "pk": 9,
   "model": "backoffice.eventlog",
   "fields": {
-    "comment": "it's fixed",
-    "msg_id": null,
-    "msg": null,
-    "user": 1,
     "date": "2014-03-02T00:20:00Z",
-    "event": 3
+    "comment": "it's fixed",
+    "event": 3,
+    "msg": null,
+    "user": 1
   }
 },
 {
   "pk": 10,
   "model": "backoffice.eventlog",
   "fields": {
-    "comment": "is now up",
-    "msg_id": null,
-    "msg": null,
-    "user": 1,
     "date": "2014-03-02T00:24:00Z",
-    "event": 2
+    "comment": "is now up",
+    "event": 2,
+    "msg": null,
+    "user": 1
   }
 },
 {

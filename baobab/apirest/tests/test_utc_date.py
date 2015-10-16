@@ -5,8 +5,8 @@ import pytz
 
 from django.conf import settings
 from django.utils.timezone import is_naive, now
-from django.test import TestCase
 
+from baobab.utils.test import TestCase
 from baobab.apirest.modelresource import MySerializer
 
 

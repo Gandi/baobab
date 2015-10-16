@@ -7,8 +7,7 @@ import json
 
 from django.core.urlresolvers import RegexURLPattern, RegexURLResolver
 
-from tastypie.test import ResourceTestCase
-
+from baobab.utils.test import ResourceTestCase
 from baobab.apirest.urls import ApiUrls
 
 

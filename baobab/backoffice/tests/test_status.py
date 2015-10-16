@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import datetime
 
-from django.test import TestCase
 from django.utils.timezone import now
 
+from baobab.utils.test import TestCase
 from baobab.backoffice.models import Event, Service
 
 

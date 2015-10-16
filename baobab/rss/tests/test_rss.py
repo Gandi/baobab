@@ -3,8 +3,8 @@ import datetime
 
 from django.db import models
 from django.utils.timezone import now as tz_now
-from django.test import TestCase
 
+from baobab.utils.test import TestCase
 from baobab.backoffice.models import Event, EventLog
 from baobab.rss.feed import RssStatusFeed
 
@@ -16,6 +16,7 @@ class TestRss(TestCase):
     fixtures = ['db_user', 'db_backoffice']
 
     def setUp(self):
+        super(TestRss, self).setUp()
         self.rss = RssStatusFeed()
 
     def test_01_rss_order(self):
