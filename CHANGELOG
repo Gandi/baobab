@@ -5,6 +5,7 @@ Baobab  changelog
 ---
   * refactoring the social network
   * the msg_id has been moved to its own table to handle all Socialnetwork
+  * add a IRC bot
 
 1.1
 -----
