@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Django settings for baobab project.
-from os.path import abspath, dirname, isfile
+from os.path import abspath, dirname, isfile, exists
 import sys
 
 # to locally override the default conf
@@ -287,6 +287,12 @@ LOGGING = {
         },
     }
 }
+
+if not exists('/dev/log'):
+    # disable syslog for travis
+    del LOGGING['formatters']['syslog']
+    del LOGGING['handlers']['syslog']
+    LOGGING['root']['handlers'].remove('syslog')
 
 import mimetypes
 mimetypes.add_type("application/vnd.ms-fontobject", ".eot", True)
