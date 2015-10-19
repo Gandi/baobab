@@ -9,7 +9,7 @@ Baobab is a Python and web application divided into 3 parts:
  - a REST API (`./baobab/apirest`)
  - a web client that uses the REST API (`./baobab.front`)
 
-It has 4 app namespaces that allow you to work (test, migrate, etc.) on specific parts: `backoffice`, `apirest`, `rss` and `translate`.
+It has 5 app namespaces that allow you to work (test, migrate, etc.) on specific parts: `backoffice`, `apirest`, `rss`, `translate` and `socialnetwork`.
 
 Baobab requires a database and supports SQLite, PostgreSQL or MySQL. 
 
@@ -151,15 +151,21 @@ You can override the default user login credentials by setting the `DEFAULT_USER
 
 If these variables are not set when the setup scripts are run, you will be prompted to create a default user.
 
-### TWITTER INTEGRATION
+### Social network integrations: Twitter, IRC, etc.
 
-You can automatically post and schedule tweets alongside "Events". 
+#### Custom integrations
 
-Register a client application with Twitter and add the client key and secret to the settings file.
+At the moment baobab can publish status updates to Twitter and IRC, but you can easily add your own integrations.
+You only need to create a new class in the `socialnetwork` app and inherit from the `SocialNetworkBase` class.
 
-The app will use cron jobs to schedule the tweet at the same time as the events. If an event is ongoing, the tweet will be published immediately.
+Each social network has its own configuration. Please take a look at the `settings.py` file for more information.
 
-You can launch these tasks by running `$ baobad twitter`.
+Upon the creation of an `Event`, a status update will be immediately published to each configured integration.
+
+#### Maintenance
+
+When the event is of the `Maintenance` type, baobab can publish a status update automatically at the estimated start date.
+Simply create a cron task to execute `$ baobad social_network` to achieve this.
 
 ### TRANSLATIONS
  
