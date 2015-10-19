@@ -1,6 +1,12 @@
 Baobab  changelog
 =================
 
+1.2-1
+-----
+  * fix dependencies
+  * fix test for travis
+  * fix test running with py.test
+
 1.2
 ---
   * refactoring the social network
