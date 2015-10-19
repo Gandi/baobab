@@ -203,6 +203,8 @@ class TestSocialNetwork(TestCase):
     @patch('baobab.socialnetwork.base.BackOfficeEvent._meta.get_field_by_name',
            return_value=mock_get_field_by_name())
     def test_10_get_max_char_ko(self, field_msg):
+        # need to force the call to the get_max_char
+        SocialNetworks._max_char = None
         sn = SocialNetworks()
         msg = 'BackOfficeEvent.msg and BackOfficeEventLog.msg HAS TO have ' \
               'the same max length'
