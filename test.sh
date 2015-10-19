@@ -90,6 +90,7 @@ then
     # install baboab with the same version of tastypie as the prod
     pip install 'Django==1.4.5'
     pip install 'django-tastypie==0.9.10'
+    pip install -e '.[dev,test]'
     python setup.py develop
 
     init_db 0
