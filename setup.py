@@ -35,6 +35,12 @@ requires = ['Django<1.6',
             'irc==8.5.3',
             ]
 
+extras_require = {
+    'test': ['mock' ],
+}
+
+tests_requires = requires + extras_require['test']
+
 setup(
     name=name,
     version=version,
@@ -56,6 +62,8 @@ setup(
     license='GPL-3',
     include_package_data=True,
     install_requires=requires,
+    extras_require=extras_require,
+    tests_require=tests_requires,
     packages=find_packages(),
     entry_points={
         'console_scripts': [
