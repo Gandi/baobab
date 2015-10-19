@@ -32,7 +32,7 @@ requires = ['Django<1.6',
             'pytz',
             'oauth2',
             'markdown',
-            'irc',
+            'irc==8.5.3',
             ]
 
 setup(

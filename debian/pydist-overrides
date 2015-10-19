@@ -3,4 +3,4 @@ South python-django-south (>= 0.7)
 django-tastypie python-tastypie
 pytz python-tz
 oauth2 python-oauth2
-irc python-irc
+irc python-irc (= 8.5.3)
