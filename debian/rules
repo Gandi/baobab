@@ -34,10 +34,12 @@ override_dh_auto_install:
 	    sed -i -e "s,https://registry.npmjs.org,$$NPM_CONFIG_REGISTRY,g" \
 	        npm-shrinkwrap.json; \
 	fi
-	
-	npm config set progress false	
-	npm install
-	npm run release
+
+	npm config set progress false
+	npm install npm@latest-2
+	./node_modules/.bin/npm install
+	./node_modules/.bin/npm run release
+
 	cp -rf baobab/static/* debian/python-baobab/usr/share/baobab/
 	dh_auto_install
 	find debian/python-baobab -type f -iname "*.js" -exec chmod 0644 {} \;
