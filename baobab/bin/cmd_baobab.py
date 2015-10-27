@@ -13,8 +13,6 @@ import pytz
 from django.core.management import execute_from_command_line, call_command
 from django.conf import settings
 
-from baobab.cron import exec_cron
-
 
 def default_user():
     from django.contrib.auth.models import User
