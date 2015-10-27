@@ -25,8 +25,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(help_text=b'A short description of the event', max_length=255)),
                 ('summary', models.TextField(default=None, null=True, blank=True)),
                 ('category', models.PositiveSmallIntegerField(help_text=b'Type of the Event', choices=[(0, b'Maintenance'), (1, b'Incident')])),
-                ('msg_id', models.CharField(default=None, max_length=30, null=True)),
-                ('msg', models.CharField(default=None, max_length=255, null=True, verbose_name=b'Twitter', blank=True)),
+                ('msg', models.CharField(default=None, max_length=255, null=True, verbose_name=b'Social Network', blank=True)),
             ],
             options={
                 'ordering': ['id', 'pk'],
@@ -39,10 +38,9 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('comment', models.TextField()),
-                ('msg_id', models.CharField(default=None, max_length=30, null=True)),
-                ('msg', models.CharField(max_length=255, null=True, verbose_name=b'Twitter', blank=True)),
-                ('event', models.ForeignKey(related_name='eventlogs', to='backoffice.Event')),
-                ('user', models.ForeignKey(related_name='eventlogs', to=settings.AUTH_USER_MODEL)),
+                ('msg', models.CharField(max_length=255, null=True, verbose_name=b'Social Network', blank=True)),
+                ('event', models.ForeignKey(related_name=b'eventlogs', to='backoffice.Event')),
+                ('user', models.ForeignKey(related_name=b'eventlogs', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ['-date'],
@@ -94,7 +92,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='event',
             name='services',
-            field=models.ManyToManyField(related_name='events', to='backoffice.Service', blank=True),
+            field=models.ManyToManyField(related_name=b'events', to='backoffice.Service', blank=True),
             preserve_default=True,
         ),
     ]

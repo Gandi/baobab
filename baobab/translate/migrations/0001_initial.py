@@ -8,8 +8,8 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('backoffice', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(help_text=b'A short description of the event', max_length=255)),
                 ('summary', models.TextField(default=None, null=True, blank=True)),
-                ('event', models.ForeignKey(related_name='eventdatas', to='backoffice.Event')),
+                ('event', models.ForeignKey(related_name=b'eventdatas', to='backoffice.Event')),
             ],
             options={
             },
@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('comment', models.TextField()),
-                ('eventlog', models.ForeignKey(related_name='eventlogdatas', to='backoffice.EventLog')),
+                ('eventlog', models.ForeignKey(related_name=b'eventlogdatas', to='backoffice.EventLog')),
             ],
             options={
             },
@@ -50,13 +50,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='eventlogdata',
             name='lang',
-            field=models.ForeignKey(related_name='eventlogdatas', to='translate.Lang'),
+            field=models.ForeignKey(related_name=b'eventlogdatas', to='translate.Lang'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='eventlogdata',
             name='user',
-            field=models.ForeignKey(related_name='eventlogdatas', default=None, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(related_name=b'eventlogdatas', default=None, to=settings.AUTH_USER_MODEL, null=True),
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(
@@ -66,13 +66,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='eventdata',
             name='lang',
-            field=models.ForeignKey(related_name='eventdatas', to='translate.Lang'),
+            field=models.ForeignKey(related_name=b'eventdatas', to='translate.Lang'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='eventdata',
             name='user',
-            field=models.ForeignKey(related_name='eventdatas', default=None, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(related_name=b'eventdatas', default=None, to=settings.AUTH_USER_MODEL, null=True),
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(
