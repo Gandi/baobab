@@ -89,6 +89,9 @@ class MySerializer(Serializer):
               .command:before {
                 font-size: 1.4rem;
               }
+              pre {
+                white-space: pre-wrap;
+              }
             </style>
             <title>%(title)s</title>
           </head>
