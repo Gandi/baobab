@@ -1,6 +1,15 @@
 Baobab  changelog
 =================
 
+1.3
+---
+  * css: use a real default front
+  * css: avoid too big container
+  * css: make article's paragraph more readable
+  * api: html rendre: force new-line in <pre> to be able to see long text
+  * update default TLS configuration
+  * Use modern SSL ciphers from mozilla
+
 1.2-1
 -----
   * fix dependencies
