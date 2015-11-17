@@ -1,3 +1,9 @@
+baobab (1.3) unstable; urgency=medium
+
+  * New release
+
+ -- Sylvain Leurent <moitux@gandi.net>  Tue, 17 Nov 2015 14:32:58 +0100
+
 baobab (1.2-1) unstable; urgency=medium
 
   * fixes on dependencies
