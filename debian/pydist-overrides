@@ -1,6 +1,8 @@
+# see debian/control for the upper limit of python-django version
 Django python-django (>= 1.2.3)
 South python-django-south (>= 0.7)
 django-tastypie python-tastypie
 pytz python-tz
 oauth2 python-oauth2
-irc python-irc (= 8.5.3)
+# see debian/control for the upper limit of python-irc version
+irc python-irc (>= 8.5.3)
