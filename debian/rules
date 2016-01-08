@@ -61,7 +61,7 @@ override_dh_installcron:
 	dh_installcron --name=baobab
 
 override_dh_installinit:
-	dh_installinit --no-restart-on-upgrade --name=baobab-syncdb
-	dh_installinit --no-restart-on-upgrade --name=baobab-ircd
+	dh_installinit --no-restart-on-upgrade --no-start --name=baobab-syncdb
+	dh_installinit --no-restart-on-upgrade --no-start --name=baobab-ircd
 
 .PHONY: override_dh_auto_install, override_dh_clean, override_dh_installcron, override_dh_builddeb, override_dh_instalinit
