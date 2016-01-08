@@ -1,6 +1,11 @@
 Baobab  changelog
 =================
 
+1.4
+---
+
+ * Debian packaging fix
+
 1.3
 ---
   * css: use a real default front
