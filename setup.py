@@ -32,7 +32,8 @@ requires = ['Django<1.6',
             'pytz',
             'oauth2',
             'markdown',
-            'irc==8.5.3',
+            'irc<10',
+            'jaraco.util<10',  # XXX needed by IRC but version not fix upstream
             ]
 
 extras_require = {
