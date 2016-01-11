@@ -1,6 +1,6 @@
-Django python-django (>= 1.2.3)
-South python-django-south (>= 0.7)
-django-tastypie python-tastypie
-pytz python-tz
-oauth2 python-oauth2
-irc python-irc (= 8.5.3)
+Django python-django; PEP386
+South python-django-south; PEP386
+django-tastypie python-tastypie; PEP386
+pytz python-tz; PEP386
+oauth2 python-oauth2; PEP386
+irc python-irc; PEP386
