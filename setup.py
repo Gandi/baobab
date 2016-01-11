@@ -25,6 +25,7 @@ with open(os.path.join(here, name, '__init__.py')) as v_file:
 #     - need to add explicit default value in the models
 #     - or always set a value for all the fields
 # Django 1.7: South is already integrated
+# Should be compatilbe util 'irc<10' but will also need 'jaraco.util<10.8'
 # WARNING: the db has to handle the COALESCE function
 requires = ['Django<1.6',
             'South<=0.8.4',
@@ -32,8 +33,7 @@ requires = ['Django<1.6',
             'pytz',
             'oauth2',
             'markdown',
-            'irc<10',
-            'jaraco.util<10',  # XXX needed by IRC but version not fix upstream
+            'irc<8.9.1'
             ]
 
 extras_require = {
