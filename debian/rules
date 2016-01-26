@@ -35,6 +35,7 @@ override_dh_auto_install:
 	        npm-shrinkwrap.json; \
 	fi
 	
+	npm config set progress false	
 	npm install
 	npm run release
 	cp -rf baobab/static/* debian/python-baobab/usr/share/baobab/
