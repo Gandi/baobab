@@ -8,7 +8,7 @@ Build-Depends: debhelper (>= 9),
  quilt (>= 0.60-2),
  nodejs-legacy (>= 0.10.20),
  nodejs (>= 0.10.20),
- nodejs (<< 4.0),t
+ nodejs (<< 4.0),
  git-core,
  dh-python,
  ca-certificates,
