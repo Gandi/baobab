@@ -17,7 +17,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 CMD=/usr/bin/baobab
 PIDFILE=/var/run/$NAME/$NAME.pid
 CONFFILE="/etc/gandi/baobab.py"
-OPTIONS="ircd --settings ${CONFFILE}"
+OPTIONS="ircd"
 USER='root'
 GROUP='www-data'
 SOCKET=`grep '^IRC_SOCKET_PATH' /etc/gandi/baobab.py | sed -e "s,^IRC_SOCKET_PATH\s*=\s*,,g" -e "s,[\'\"],,g"`
@@ -40,6 +40,7 @@ case "$1" in
             chown $USER:$USER "/run/baobab"
         fi
         log_begin_msg "Starting $NAME"
+        export PYTHONPATH="/etc" DJANGO_SETTINGS_MODULE="gandi.baobab"
         start-stop-daemon --start --quiet \
                           --chuid $USER:nogroup \
                           --make-pidfile --pidfile $PIDFILE \
