@@ -15,10 +15,11 @@
 NAME=baobab-ircd
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 CMD=/usr/bin/baobab
-PIDFILE=/var/run/$NAME/$NAME.pid
+RUNDIR=/run/$NAME
+PIDFILE="${RUNDIR}/${NAME}.pid"
 CONFFILE="/etc/gandi/baobab.py"
 OPTIONS="ircd"
-USER='root'
+USER='www-data'
 GROUP='www-data'
 SOCKET=`grep '^IRC_SOCKET_PATH' /etc/gandi/baobab.py | sed -e "s,^IRC_SOCKET_PATH\s*=\s*,,g" -e "s,[\'\"],,g"`
 
@@ -33,28 +34,24 @@ fi
 
 case "$1" in
     start)
-        PID_DIR=`dirname $PIDFILE`
-        [ ! -d "$PID_DIR" ] && mkdir -p $PID_DIR
-        if [ ! -d "/run/baobab" ]; then
-            mkdir -p "/run/baobab"
-            chown $USER:$USER "/run/baobab"
+        if [ ! -d "$RUNDIR" ]; then
+            install -d -m 0750 -o "$USER" -g "$GROUP" "$RUNDIR"
+        else
+            chown $USER:$GROUP "$RUNDIR"
         fi
         log_begin_msg "Starting $NAME"
         export PYTHONPATH="/etc" DJANGO_SETTINGS_MODULE="gandi.baobab"
         start-stop-daemon --start --quiet \
-                          --chuid $USER:nogroup \
+                          --chuid $USER:$GROUP \
                           --make-pidfile --pidfile $PIDFILE \
                           --background \
                           --exec $CMD -- $OPTIONS
-        if [ -n "${SOCKET}" ] && [ -e "${SOCKET}" ]; then
-            chmod g+w "${SOCKET}"
-            chgrp "${GROUP}" "${SOCKET}"
-        fi
         ;;
     stop)
-      start-stop-daemon --stop --quiet \
-                        --pidfile $PIDFILE \
-                        --user $USER
+        start-stop-daemon --stop --quiet \
+                          --pidfile $PIDFILE \
+                          --user $USER
+        rm -rf "$RUNDIR"
       ;;
     status|force-reload|restart|try-restart)
         # nothing
