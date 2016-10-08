@@ -5,7 +5,7 @@ install:
   - pip install -e '.[test]'
   - python setup.py develop
   - pip install pytest
-  - pip install pytest-django
+  - pip install -U 'pytest-django<3.0.0'
   - pip install pytest-coverage
   - pip install coveralls
 script:
