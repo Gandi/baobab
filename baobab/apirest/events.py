@@ -11,7 +11,7 @@ from django.utils.timezone import now
 from tastypie import fields
 from tastypie.resources import ALL_WITH_RELATIONS
 from tastypie.utils import trailing_slash
-from tastypie.exceptions import ImmediateHttpResponse
+from tastypie.exceptions import BadRequest
 from tastypie.http import HttpBadRequest
 
 from baobab.backoffice.models import (Event as BOEvent,
@@ -71,10 +71,11 @@ class EventsResource(RawModelResource):
                 try:
                     tmp = self.service_choices[val.upper()]
                 except KeyError:
-                    raise ImmediateHttpResponse(
-                        HttpBadRequest('Bad value for filter services '
-                                       'choises are: %s' %
-                                       ', '.join(self.service_choices)))
+                    list_ = ', '.join(self.service_choices)
+                    raise BadRequest({
+                        'error': "'{}' not in list: {}".format(val, list_),
+                        'field': 'services',
+                    })
                 del filters[key]
                 key = key.split('__', 1)
                 key.insert(1, 'name')
@@ -83,10 +84,11 @@ class EventsResource(RawModelResource):
                 try:
                     filters[key] = self.category_choices[val.upper()]
                 except KeyError:
-                    raise ImmediateHttpResponse(
-                        HttpBadRequest('Bad value for filter category '
-                                       'choises are: %s' %
-                                       ', '.join(self.category_choices)))
+                    list_ = ', '.join(self.category_choices)
+                    raise BadRequest({
+                        'error': "'{}' not in list: {}".format(val, list_),
+                        'field': 'category',
+                    })
             if key == 'date_end' and val.lower() == 'null':
                 del filters['date_end']
                 filters['date_end__isnull'] = True
@@ -102,14 +104,16 @@ class EventsResource(RawModelResource):
         if current:
             val = current.lower()
             if val not in ('true', 'false'):
-                raise ImmediateHttpResponse(
-                    HttpBadRequest('Bad value for filter current '
-                                   'choises are: ["true", "false"]'))
+                raise BadRequest({
+                    'error': "choises are: ['true', 'false']",
+                    'field': 'current',
+                })
             for key in request.GET:
                 if 'date' in key:
-                    raise ImmediateHttpResponse(
-                        HttpBadRequest('Incompatible filter: "%s" '
-                                       'with filter "current"' % key))
+                    raise BadRequest({
+                        'error': "Can't be used in the same time as 'current'",
+                        'field': 'date',
+                    })
             current = ((Q(date_end__isnull=True) | Q(date_end__gt=now)) &
                        Q(date_start__lte=now))
             if val == 'false':

@@ -72,8 +72,8 @@ IRC_URL_LENGTH = len(URL_EVENT) - 10
 IRC_ALLOWED_CHAR = IRC_MAX_CHAR - IRC_PREFIX_LEN - IRC_URL_LENGTH - 1
 
 # message used by the api
-HTTP_NOT_IMPLEMENTED_ERROR = 'Sorry but it\'s not implemented yet\n'  # 501
-HTTP_APPLICATION_ERROR = 'Sorry but something went wrong\n'  # 500
+HTTP_NOT_IMPLEMENTED_ERROR = 'Sorry but it\'s not implemented yet'  # 501
+HTTP_APPLICATION_ERROR = 'Sorry but something went wrong'  # 500
 HTTP_NOT_FOUND = 'Resource not found\n'  # 404
 
 # API HTML OUTPUT

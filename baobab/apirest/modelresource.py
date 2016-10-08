@@ -12,15 +12,26 @@ This class override the tastypie's ModelResource class
 import textwrap
 import pytz
 import json
+import logging
+import warnings
 
 from django.core.exceptions import ImproperlyConfigured, ObjectDoesNotExist
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.utils.timezone import is_naive
 
-from tastypie.exceptions import (UnsupportedFormat,
-                                 ImmediateHttpResponse, NotFound)
-from tastypie.http import HttpNotImplemented, HttpApplicationError
+# Django 1.5 has moved this constant up one level.
+try:
+    from django.db.models.constants import LOOKUP_SEP
+except ImportError:
+    from django.db.models.sql.constants import LOOKUP_SEP
+
+import tastypie
+from tastypie.exceptions import (UnsupportedFormat, NotFound, BadRequest,
+                                 InvalidFilterError, InvalidSortError)
+from tastypie.http import HttpApplicationError, HttpNotImplemented
+from tastypie import http
+from tastypie.resources import ALL, ALL_WITH_RELATIONS
 
 try:
     from tastypie.http import HttpNotFound
@@ -32,6 +43,9 @@ except ImportError:
 from tastypie.resources import ModelResource
 from tastypie.serializers import Serializer
 from tastypie.bundle import Bundle
+
+LOG = logging.getLogger(__name__)
+logging.basicConfig(level=logging.WARNING)
 
 
 def my_handler(obj):
@@ -112,15 +126,7 @@ class MySerializer(Serializer):
         try:
             return super(MySerializer, self).serialize(bundle, format, options)
         except (ImproperlyConfigured, UnsupportedFormat):
-            raise ImmediateHttpResponse(
-                HttpNotImplemented(settings.HTTP_NOT_IMPLEMENTED_ERROR)
-            )
-        except ImmediateHttpResponse:
-            raise
-        except Exception:
-            raise ImmediateHttpResponse(
-                HttpApplicationError(settings.HTTP_APPLICATION_ERROR)
-            )
+            raise HttpNotImplemented(settings.HTTP_NOT_IMPLEMENTED_ERROR)
 
 
 class RawModelResource(ModelResource):
@@ -181,33 +187,249 @@ class RawModelResource(ModelResource):
                 del schema['fields'][key]['default']
         return schema
 
-    def obj_get(self, **kwargs):
-        try:
-            return super(RawModelResource, self).obj_get(**kwargs)
-        except (NotFound, ObjectDoesNotExist):
-            raise ImmediateHttpResponse(
-                HttpNotFound(settings.HTTP_NOT_FOUND)
-            )
-        except ImmediateHttpResponse:
-            raise
-        except Exception:
-            raise ImmediateHttpResponse(
-                HttpApplicationError(settings.HTTP_APPLICATION_ERROR)
-            )
+    # overwrite some method to have the same 'json' schema return for all
+    # kind of error
 
-    def obj_get_list(self, **kwargs):
-        try:
-            return super(RawModelResource, self).obj_get_list(**kwargs)
-        except (NotFound, ObjectDoesNotExist):
-            raise ImmediateHttpResponse(
-                HttpNotFound(settings.HTTP_NOT_FOUND)
-            )
-        except ImmediateHttpResponse:
-            raise
-        except Exception:
-            raise ImmediateHttpResponse(
-                HttpApplicationError(settings.HTTP_APPLICATION_ERROR)
-            )
+    def _handle_500(self, request, exception):
+        response_class = HttpApplicationError
+        response_code = 500
+        if isinstance(exception, (NotFound, ObjectDoesNotExist, Http404)):
+            response_class = HttpResponseNotFound
+            response_code = 404
+
+        LOG.error('Internal Server Error: %s' % request.path, exc_info=True,
+                  extra={'status_code': response_code, 'request': request})
+
+        if settings.DEBUG:
+            import traceback
+            import sys
+            tb = '\n'.join(traceback.format_exception(*(sys.exc_info())))
+            data = {
+                "error": unicode(exception),
+                "traceback": tb,
+            }
+            return self.error_response(request, data,
+                                       response_class=response_class)
+
+        msg = "Sorry, this request could not be processed. " \
+              "Please try again later."
+        data = {
+            'error': getattr(settings, 'HTTP_APPLICATION_ERROR', msg),
+        }
+        return self.error_response(request, data,
+                                   response_class=response_class)
+
+    def error_response(self, request, errors, response_class=None):
+        desired_format = self._meta.default_format
+        if request:
+            try:
+                desired_format = self.determine_format(request)
+            except BadRequest:
+                pass
+
+        if response_class is None:
+            response_class = http.HttpBadRequest
+
+        if isinstance(errors, dict) and 'error' in errors:
+            errors = errors['error']
+        if isinstance(errors, basestring):
+            errors = {'error': errors}
+
+        serialized = self.serialize(request, errors, desired_format)
+        return response_class(content=serialized, content_type=desired_format)
+
+    def check_filtering(self, field_name, filter_type='exact',
+                        filter_bits=None):
+        """
+        Given a field name, a optional filter type and an optional list of
+        additional relations, determine if a field can be filtered on.
+
+        If a filter does not meet the needed conditions, it should raise an
+        ``InvalidFilterError``.
+
+        If the filter meets the conditions, a list of attribute names (not
+        field names) will be returned.
+        """
+        if filter_bits is None:
+            filter_bits = []
+
+        if field_name not in self._meta.filtering:
+            raise InvalidFilterError({
+                'error': ("Filtering on '{}' is not allowed."
+                          "".format(field_name)),
+                'field': field_name,
+            })
+
+        # Check to see if it's an allowed lookup type.
+        if not self._meta.filtering[field_name] in (ALL, ALL_WITH_RELATIONS):
+            # Must be an explicit whitelist.
+            if filter_type not in self._meta.filtering[field_name]:
+                raise InvalidFilterError({
+                    'error': ("Filter '{}' is not allowed on field '{}'"
+                              "".format(filter_type, field_name)),
+                    'field': field_name,
+                })
+        if self.fields[field_name].attribute is None:
+            raise InvalidFilterError({
+                'error': ("The '{}' field has no 'attribute' for "
+                          "searching with.".format(field_name)),
+                'field': field_name,
+            })
+
+        # Check to see if it's a relational lookup and if that's allowed.
+        if len(filter_bits):
+            if not getattr(self.fields[field_name], 'is_related', False):
+                raise InvalidFilterError({
+                    'error': ("The '{}' field does not support relations."
+                              "".format(field_name)),
+                    'field': field_name,
+                })
+
+            if not self._meta.filtering[field_name] == ALL_WITH_RELATIONS:
+                raise InvalidFilterError({
+                    'error': ("Lookups are not allowed more than one level "
+                              "deep on the '{}' field.".format(field_name)),
+                    'field': field_name,
+                })
+
+            # Recursively descend through the remaining lookups in the filter,
+            # if any. We should ensure that all along the way, we're allowed
+            # to filter on that field by the related resource.
+            resource = self.fields[field_name]
+            related_resource = resource.get_related_resource(None)
+            return [resource.attribute] + \
+                related_resource.check_filtering(filter_bits[0], filter_type,
+                                                 filter_bits[1:])
+
+        return [self.fields[field_name].attribute]
+
+    def apply_sorting(self, obj_list, options=None):
+        """
+        Given a dictionary of options, apply some ORM-level sorting to the
+        provided ``QuerySet``.
+
+        Looks for the ``order_by`` key and handles either ascending (just the
+        field name) or descending (the field name with a ``-`` in front).
+
+        The field name should be the resource field, **NOT** model field.
+        """
+        if options is None:
+            options = {}
+
+        parameter_name = 'order_by'
+
+        if 'order_by' not in options:
+            if 'sort_by' not in options:
+                # Nothing to alter the order. Return what we've got.
+                return obj_list
+            else:
+                warnings.warn("'sort_by' is a deprecated parameter. "
+                              "Please use 'order_by' instead.")
+                parameter_name = 'sort_by'
+
+        order_by_args = []
+
+        if hasattr(options, 'getlist'):
+            order_bits = options.getlist(parameter_name)
+        else:
+            order_bits = options.get(parameter_name)
+
+            if not isinstance(order_bits, (list, tuple)):
+                order_bits = [order_bits]
+
+        for order_by in order_bits:
+            order_by_bits = order_by.split(LOOKUP_SEP)
+
+            field_name = order_by_bits[0]
+            order = ''
+
+            if order_by_bits[0].startswith('-'):
+                field_name = order_by_bits[0][1:]
+                order = '-'
+
+            if field_name not in self.fields:
+                # It's not a field we know about. Move along citizen.
+                raise InvalidSortError({
+                    'error': ("No matching '{}' field for ordering on."
+                              "".format(field_name)),
+                    'field': field_name,
+                })
+
+            if field_name not in self._meta.ordering:
+                raise InvalidSortError({
+                    'error': ("The '{}' field does not allow ordering."
+                              "".format(field_name)),
+                    'field': field_name,
+                })
+
+            if self.fields[field_name].attribute is None:
+                raise InvalidSortError({
+                    'error': ("The '{}' field has no 'attribute' for "
+                              "ordering with.".format(field_name)),
+                    'field': field_name,
+                })
+
+            order_by_args.append("%s%s" % (order, LOOKUP_SEP.join([
+                self.fields[field_name].attribute] + order_by_bits[1:])))
+
+        return obj_list.order_by(*order_by_args)
+
+    if tastypie.__version__ < (0, 9, 12):
+
+        # this in need to hanble the error for thoes versions
+
+        def wrap_view(self, view):
+
+            try:
+                from django.views.decorators.csrf import csrf_exempt
+            except ImportError:
+                def csrf_exempt(func):
+                    return func
+
+            @csrf_exempt
+            def wrapper(request, *args, **kwargs):
+                from django.utils.cache import patch_cache_control
+                from tastypie.fields import ApiFieldError
+                from django.core.exceptions import ValidationError
+
+                try:
+                    callback = getattr(self, view)
+                    response = callback(request, *args, **kwargs)
+
+                    if request.is_ajax():
+                        patch_cache_control(response, no_cache=True)
+
+                    return response
+                except (BadRequest, ApiFieldError, InvalidSortError) as e:
+                    data = {"error": e.args[0] if getattr(e, 'args') else ''}
+                    return self.error_response(
+                        request, data, response_class=http.HttpBadRequest)
+                except ValidationError, e:
+                    data = {"error": e.messages}
+                    return self.error_response(
+                        request, data, response_class=http.HttpBadRequest)
+                except Exception, e:
+                    if hasattr(e, 'response'):
+                        return e.response
+
+                    # A real, non-expected exception.
+                    # Handle the case where the full traceback is more helpful
+                    # than the serialized error.
+                    if settings.DEBUG and getattr(
+                            settings, 'TASTYPIE_FULL_DEBUG', False):
+                        raise
+
+                    # Re-raise the error to get a proper traceback when the
+                    # error happend during a test case
+                    if request.META.get('SERVER_NAME') == 'testserver':
+                        raise
+
+                    # Rather than re-raising, we're going to things similar to
+                    # what Django does. The difference is returning a
+                    # serialized error message.
+                    return self._handle_500(request, e)
+
+            return wrapper
 
     class Meta:
         max_limit = None
