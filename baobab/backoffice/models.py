@@ -6,6 +6,7 @@ Define the database model for baobab
 from datetime import datetime, timedelta
 import pytz
 
+import django
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
@@ -15,6 +16,12 @@ from django.dispatch import receiver
 from django.utils.timezone import now
 
 from baobab.backoffice.modelmanager import EventManager
+
+has_index_together = True
+if django.VERSION[0:3] < (1, 5, 0):
+    # prod version 1.4.5
+    # this is ok as the index is created by south
+    has_index_together = False
 
 
 class Service(models.Model):
@@ -83,9 +90,10 @@ class Event(models.Model):
     # Used for <pubDate> in RSS Feed
     last_update = models.DateTimeField(default=now, db_index=True)
 
-    date_start = models.DateTimeField(default=now)
-    date_end = models.DateTimeField(null=True, blank=True, default=None)
-    estimate_date_end = models.DateTimeField()
+    date_start = models.DateTimeField(default=now, db_index=True)
+    date_end = models.DateTimeField(null=True, blank=True, default=None,
+                                    db_index=True)
+    estimate_date_end = models.DateTimeField(db_index=True)
     duration = models.PositiveIntegerField(help_text='Duration (in minutes)')
 
     # XXX to remove at the next release
@@ -95,7 +103,7 @@ class Event(models.Model):
     # XXX to remove at the next release
     summary = models.TextField(null=True, blank=True, default=None)
     services = models.ManyToManyField('Service', related_name='events',
-                                      blank=True)
+                                      blank=True, db_index=True)
     MAINTENANCE = 0
     INCIDENT = 1
     CATEGORY_CHOICES = (
@@ -103,7 +111,8 @@ class Event(models.Model):
         (INCIDENT, 'Incident'),
     )
     category = models.PositiveSmallIntegerField(choices=CATEGORY_CHOICES,
-                                                help_text='Type of the Event')
+                                                help_text='Type of the Event',
+                                                db_index=True)
     msg = models.CharField('Social Network', max_length=255,
                            null=True, blank=True, default=None)
 
@@ -135,10 +144,19 @@ class Event(models.Model):
     class Meta:
         # XXX avoid the admin to override the right order: see EventQuerySet
         ordering = ['id', 'pk']
+        if has_index_together:
+            index_together = [
+                # filter 'current' in the API
+                ('date_start', 'date_end'),
+                # filter used to find the 'status'
+                ('date_start', 'date_end', 'category'),
+                # used by the cron close_event
+                ('date_start', 'estimate_date_end', 'date_end'),
+            ]
 
 
 class EventLog(models.Model):
-    date = models.DateTimeField(default=now)
+    date = models.DateTimeField(default=now, db_index=True)
 
     # XXX to remove at the next release
     comment = models.TextField()
