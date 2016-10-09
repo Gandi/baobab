@@ -81,7 +81,7 @@ class Event(models.Model):
     objects = EventManager()  # override the default manager
 
     # Used for <pubDate> in RSS Feed
-    last_update = models.DateTimeField(default=now)
+    last_update = models.DateTimeField(default=now, db_index=True)
 
     date_start = models.DateTimeField(default=now)
     date_end = models.DateTimeField(null=True, blank=True, default=None)
