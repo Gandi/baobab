@@ -88,8 +88,9 @@ then
     source "$venv/bin/activate"
 
     # install baboab with the same version of tastypie as the prod
+    pip install -U pip
     pip install 'Django==1.4.5'
-    pip install 'django-tastypie==0.9.10'
+    pip install -e 'git+https://github.com/django-tastypie/django-tastypie.git@v0.9.10#egg=django_tastypie'
     pip install -e '.[dev,test]'
     python setup.py develop
 
