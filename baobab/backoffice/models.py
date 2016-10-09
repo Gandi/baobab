@@ -124,7 +124,8 @@ class Event(models.Model):
                self.date_start >= self.estimate_date_end:
                 self.estimate_date_end = self.date_end
             if self.date_end <= now():
-                if self.eventlogs.exists() and self.eventlogs.all()[0].date < self.date_end:
+                if self.eventlogs.exists() and \
+                   self.eventlogs.all()[0].date < self.date_end:
                     self.last_update = self.date_end
         else:
             delta = timedelta(minutes=self.duration)
