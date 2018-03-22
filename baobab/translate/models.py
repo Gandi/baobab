@@ -20,6 +20,9 @@ class Lang(models.Model):
         return self.name
 
 
+# XXX entris in this table are auto-genered by the admin
+#     see: baobab.backoffice.adminform.EventForm.save
+# XXX this should probably be replace with a `django.dispatch.receiver`
 class EventData(models.Model):
 
     event = models.ForeignKey('backoffice.Event', related_name='eventdatas')
@@ -34,6 +37,9 @@ class EventData(models.Model):
         unique_together = ('event', 'lang')
 
 
+# XXX entris in this table are auto-genered by the admin
+#     see: baobab.backoffice.adminform.EventLogForm.save
+# XXX this should probably be replace with a `django.dispatch.receiver`
 class EventLogData(models.Model):
 
     eventlog = models.ForeignKey('backoffice.EventLog',
