@@ -171,7 +171,9 @@ Simply create a cron task to execute `$ baobad social_network` to achieve this.
  
 You can easily translate content published with Baobab and retrieve translated content via the API.
 
-Special user permissions can be granted for translators, and the translation interface is available in the backoffice at http://localhost:8000/admin/translate.`
+Special user permissions can be granted for translators (add them into the "translate" group), and the translation interface is available in the backoffice at http://localhost:8000/admin/translate.`
+
+**Note**: The "translate" group might be missing the real permissions: just add all the permissions about the "translate" app.
 
 You can then retrieve translated content by adding the "Accept-Language" header to your API requests. If you don't, Baobab automatically falls back to English (the default language).
 
