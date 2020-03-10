@@ -1,3 +1,8 @@
+# DEPRECATED.
+
+This project is deprecated and will not receive new features or fixes. Use it at your own risks.
+
+
 # Gandi Baobab
 
 The application that powers Gandi's Status website ([status.gandi.net](https://status.gandi.net)).
